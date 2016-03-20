@@ -1,9 +1,9 @@
-# Hapi API for Satelizer 
+# Hapi API for [Satellizer](https://github.com/sahat/satellizer)
 
 
 ## About 
 
-**[Satelizer](https://github.com/sahat/satellizer)** is a simple to use, end-to-end, token-based authentication module
+**[Satellizer](https://github.com/sahat/satellizer)** is a simple to use, end-to-end, token-based authentication module
 for [AngularJS](http://angularjs.org) with built-in support for Google, Facebook,
 LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email
 and Password sign-in. However, you are not limited to the sign-in options above, in fact
