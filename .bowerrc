@@ -1,0 +1,5 @@
+{
+  "directory": "client/vendor",
+  "analytics": true,
+  "color": true
+}

@@ -23,8 +23,9 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
-# Dependency directory
+# Dependencies
 node_modules
+client/vendor
 
 # Optional npm cache directory
 .npm
