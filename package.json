@@ -1,0 +1,28 @@
+{
+  "name": "hapilizer",
+  "version": "1.0.0",
+  "description": "**[Satellizer](https://github.com/sahat/satellizer)** is a simple to use, end-to-end, token-based authentication module\r for [AngularJS](http://angularjs.org) with built-in support for Google, Facebook,\r LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email\r and Password sign-in. However, you are not limited to the sign-in options above, in fact\r you can add any *OAuth 1.0* or *OAuth 2.0* provider by passing provider-specific information\r in the app *config* block.",
+  "main": "hapilizer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indieforger/hapilizer.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indieforger/hapilizer/issues"
+  },
+  "homepage": "https://github.com/indieforger/hapilizer#readme",
+  "dependencies": {
+    "boom": "^3.1.2",
+    "hapi": "^13.2.1",
+    "hoek": "^3.0.4",
+    "joi": "^8.0.5",
+    "moment": "^2.12.0",
+    "mongodb": "^2.1.7"
+  },
+  "devDependencies": {}
+}
