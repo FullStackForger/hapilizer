@@ -1,6 +1,11 @@
 const Hapi = require('hapi');
+
+const config = require('./config');
 const server = new Hapi.Server();
-const connection = {host: 'localhost', port: '3000'};
+const connection = {
+	host: config.server.host,
+	port: config.server.port
+	};
 
 const plugins = [{
 	register: require('hapi-app-spa'),
@@ -10,8 +15,13 @@ const plugins = [{
 		//assets: ['css', 'img', 'js', 'partials', 'files'],
 		relativeTo: require('path').join(__dirname, './client')
 	}
+},{
+	register: require('./plugins/db'),
+	options: { database: config.database }
+},{
+	register: require('./plugins/user'),
+	options: {}
 }];
-
 
 server.connection(connection);
 
