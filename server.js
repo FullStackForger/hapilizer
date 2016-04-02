@@ -20,7 +20,7 @@ const plugins = [{
 	options: { database: config.database }
 },{
 	register: require('./plugins/user'),
-	options: {}
+	options: { auth: config.auth }
 }];
 
 server.connection(connection);
