@@ -27,5 +27,8 @@
     "mongodb": "^2.1.7",
     "mongoose": "^4.4.10"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "code": "^2.1.1",
+    "lab": "^10.3.0"
+  }
 }

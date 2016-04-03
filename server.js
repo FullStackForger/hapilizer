@@ -9,9 +9,13 @@ const connection = {
 	host: config.server.host,
 	port: config.server.port
 	};
+
 const plugin = {
 	register: hapilizer,
-	options: config
+	options: {
+		auth: config.auth,
+		database: config.database
+	}
 };
 
 server.connection(connection);
