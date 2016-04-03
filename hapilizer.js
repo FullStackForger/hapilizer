@@ -35,19 +35,7 @@ exports.register = function (server, options, next) {
 		register: require('./plugins/user'),
 		options: { auth: options.auth }
 	}];
-
-	// Log incoming request
-	server.ext('onRequest', function (request, reply) {
-		console.log(request.path, request.query);
-		return reply.continue();
-	});
-
-	// Log 500 errors
-	server.on('request-error', (request, err) => {
-		console.log(`Error (500), reques id: ${request.id}, message: ${err.message}`);
-		console.log(err.stack);
-	});
-
+	
 	server.register(plugins, (err) => next(err));
 };
 

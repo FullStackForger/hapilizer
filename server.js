@@ -22,6 +22,18 @@ server.connection(connection);
 server.register(plugin, (err) => {
 	if (err) throw err;
 
+	// Log incoming request
+	server.ext('onRequest', function (request, reply) {
+		console.log(request.path, request.query);
+		return reply.continue();
+	});
+
+	// Log 500 errors
+	server.on('request-error', (request, err) => {
+		console.log(`Error (500), reques id: ${request.id}, message: ${err.message}`);
+		console.log(err.stack);
+	});
+
 	server.start((err) => {
 		if (err) throw err;
 		console.log('Server running at:', server.info.uri);
