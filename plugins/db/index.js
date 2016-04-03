@@ -20,7 +20,12 @@ exports.register = function (server, options, next) {
 		next();
 	});
 
-	Mongoose.connect('mongodb://' + settings.database.host + '/' + settings.database.db);
+	let credentials = '';
+	if (settings.username !== '' && settings.password !== '') {
+		credentials = settings.username + ':' + settings.password + '@';
+	}
+
+	Mongoose.connect('mongodb://' + credentials + settings.host + ':' + settings.port + '/' + settings.db);
 };
 
 exports.register.attributes = {
