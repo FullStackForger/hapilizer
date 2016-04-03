@@ -1,10 +1,11 @@
 'use strict';
 const Hoek = require('hoek');
 const Mongoose = require('mongoose');
+
 const defaults = {
 	host: '127.0.0.1',
 	port: 27017,
-	db: 'hapilizer',
+	db: 'Hapilizer',
 	username: '',
 	password: ''
 };
@@ -29,5 +30,5 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-	name: 'mongoose'
+	name: 'Mongoose'
 };

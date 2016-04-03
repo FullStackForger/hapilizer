@@ -1,4 +1,6 @@
-var userSchema = new mongoose.Schema({
+const Mongoose = require('mongoose');
+
+var userSchema = new Mongoose.Schema({
 	email: { type: String, unique: true, lowercase: true },
 	password: { type: String, select: false },
 	displayName: String,
@@ -35,4 +37,4 @@ userSchema.methods.comparePassword = function(password, done) {
 	});
 };
 
-var User = mongoose.model('User', userSchema);
+var User = Mongoose.model('User', userSchema);
