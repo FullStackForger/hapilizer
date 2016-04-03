@@ -10,6 +10,7 @@ const Lab = require('lab');
 
 // Load internal modules
 const hapilizer = require('../hapilizer');
+const mongoose = require('mongoose');
 
 // Declare internals
 const internals = {};
@@ -18,6 +19,7 @@ const internals = {};
 const lab = exports.lab = Lab.script();
 const describe = lab.describe;
 const beforeEach = lab.beforeEach;
+const afterEach = lab.afterEach;
 const it = lab.it;
 const expect = Code.expect;
 
@@ -28,6 +30,11 @@ describe('plugin', () => {
 	beforeEach((next) => {
 		server = new Hapi.Server();
 		server.connection({});
+		next();
+	});
+
+	afterEach((next) => {
+		try { mongoose.connection.close() } catch (e) { } // no need to log anything
 		next();
 	});
 
