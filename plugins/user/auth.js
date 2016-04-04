@@ -1,11 +1,11 @@
 'use strict';
-exports.validate = function (request, decodedToken, callback) {
-	let error;
-	let credentials = {};
+exports.validate = function (decoded, request, callback) {
+
+	let credentials = decoded;
 
 	if (!credentials) {
-		return callback(error, false, credentials);
+		return callback(null, false);
 	}
 
-	return callback(error, true, credentials)
+	return callback(null, true, credentials)
 };

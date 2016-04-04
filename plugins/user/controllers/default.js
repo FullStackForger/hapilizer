@@ -6,7 +6,8 @@ exports.any = {
 			info: request.info,
 			path: request.path,
 			query: request.query,
-			params: request.params
+			params: request.params,
+			auth: request.auth
 		})
 	}
 };
