@@ -21,6 +21,10 @@ exports.register = function (server, options, next) {
 		next();
 	});
 
+	Mongoose.connection.once('disconnected', () => {
+		Mongoose.connection.removeAllListeners('error');
+	});
+
 	let credentials = '';
 	if (settings.username !== '' && settings.password !== '') {
 		credentials = settings.username + ':' + settings.password + '@';
