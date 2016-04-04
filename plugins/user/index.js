@@ -1,5 +1,5 @@
 'use strict';
-const auth = require('./auth');
+const jwtAuth = require('./auth/jwt');
 const routes = require('./route');
 
 exports.register = function (server, options, next) {
@@ -7,7 +7,7 @@ exports.register = function (server, options, next) {
 
 	server.auth.strategy('token', 'jwt', {
 		key: options.auth.tokenSecret,
-		validateFunc: auth.validate,
+		validateFunc: jwtAuth.validate,
 		verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
 	});
 

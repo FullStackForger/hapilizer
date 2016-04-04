@@ -1,6 +1,6 @@
-const defaultCtrl = require('./controllers/default.js');
-const apiCtrl = require('./controllers/api');
-const authCtrl = require('./controllers/auth');
+const defaultCtrl = require('./routes/default.js');
+const apiCtrl = require('./routes/api');
+const authCtrl = require('./routes/auth');
 
 module.exports = [
 	{ path: '/api/me', method: 'GET', config: apiCtrl.getMe },
@@ -8,6 +8,7 @@ module.exports = [
 
 	{ path: '/auth/login', method: 'POST', config: authCtrl.postLogin },
 	{ path: '/auth/signup', method: 'POST', config: authCtrl.postSignup },
+
 	{ path: '/auth/google', method: 'POST', config: authCtrl.postGoogle },
 	//{ path: '/auth/github', method: 'POST', config: defaultCtrl.any },
 	//{ path: '/auth/instagram', method: 'POST', config: defaultCtrl.any },
