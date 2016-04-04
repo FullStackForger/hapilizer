@@ -6,6 +6,7 @@ module.exports = [
 	{ path: '/api/me', method: 'GET', config: apiCtrl.getMe },
 	{ path: '/api/me', method: 'PUT', config: apiCtrl.putMe },
 
+	{ path: '/auth/login', method: 'GET', config: authCtrl.getLogin },
 	{ path: '/auth/login', method: 'POST', config: authCtrl.postLogin },
 	{ path: '/auth/signup', method: 'POST', config: authCtrl.postSignup },
 

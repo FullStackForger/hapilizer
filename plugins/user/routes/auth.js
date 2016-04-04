@@ -1,8 +1,10 @@
 'use strict';
 const defaultCtrl = require('./default.js');
 
+exports.getLogin =
 exports.postLogin = {
-	handler: defaultCtrl.any.handler
+	handler: defaultCtrl.any.handler,
+	auth: 'basic'
 };
 
 exports.postSignup = {

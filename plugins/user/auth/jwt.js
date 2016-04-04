@@ -1,6 +1,6 @@
 'use strict';
 exports.validate = function (decoded, request, callback) {
-
+	// todo: extract from db
 	let credentials = decoded;
 
 	if (!credentials) {

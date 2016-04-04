@@ -1,20 +1,31 @@
 'use strict';
 const jwtAuth = require('./auth/jwt');
-const routes = require('./route');
+const basicAuth = require('./auth/basic');
+const routes = require('./routes');
+const plugins = [
+	require('hapi-auth-jwt2'),
+	require('hapi-auth-basic')
+];
 
 exports.register = function (server, options, next) {
-	server.register(require('hapi-auth-jwt2'), function (error) {
+	server.register(plugins, function (error) {
 
-	server.auth.strategy('token', 'jwt', {
-		key: options.auth.tokenSecret,
-		validateFunc: jwtAuth.validate,
-		verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
+		server.auth.strategy('token', 'jwt', {
+			key: options.auth.tokenSecret,
+			validateFunc: jwtAuth.validate,
+			verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
+		});
+
+		server.auth.strategy('basic', 'basic', {
+			validateFunc: basicAuth.validate
+		});
+
+		server.route(routes);
 	});
 
-	server.route(routes);
-});
-next();
+	next();
 };
+
 exports.register.attributes = {
 	name: 'user'
 };

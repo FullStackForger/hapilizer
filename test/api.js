@@ -24,11 +24,6 @@ const afterEach = lab.afterEach;
 const it = lab.it;
 const expect = Code.expect;
 
-internals.tokenHeader = function (username, privateKey, options) {
-	options = options || {};
-	return 'Bearer ' + Jwt.sign({username : username}, privateKey, options);
-};
-
 describe('api/me', () => {
 	let server;
 	const privateKey = 'PajeH0mz4of85T9FB1oFzaB39lbNLbDbtCQ';
@@ -101,3 +96,8 @@ describe('api/me', () => {
 	});
 
 });
+
+internals.tokenHeader = function (username, privateKey, options) {
+	options = options || {};
+	return 'Bearer ' + Jwt.sign({username : username}, privateKey, options);
+};
