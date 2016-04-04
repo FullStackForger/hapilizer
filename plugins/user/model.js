@@ -1,4 +1,5 @@
 const Mongoose = require('mongoose');
+const Bcrypt = require('bcrypt');
 
 var userSchema = new Mongoose.Schema({
 	email: { type: String, unique: true, lowercase: true },
@@ -23,8 +24,8 @@ userSchema.pre('save', function(next) {
 	if (!user.isModified('password')) {
 		return next();
 	}
-	bcrypt.genSalt(10, function(err, salt) {
-		bcrypt.hash(user.password, salt, function(err, hash) {
+	Bcrypt.genSalt(10, function(err, salt) {
+		Bcrypt.hash(user.password, salt, function(err, hash) {
 			user.password = hash;
 			next();
 		});
@@ -32,7 +33,7 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.methods.comparePassword = function(password, done) {
-	bcrypt.compare(password, this.password, function(err, isMatch) {
+	Bcrypt.compare(password, this.password, function(err, isMatch) {
 		done(err, isMatch);
 	});
 };
