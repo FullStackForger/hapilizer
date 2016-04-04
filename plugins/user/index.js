@@ -9,11 +9,12 @@ const plugins = [
 
 exports.register = function (server, options, next) {
 	server.register(plugins, function (error) {
+		const tokenOpts = options.auth.token;
 
 		server.auth.strategy('token', 'jwt', {
-			key: options.auth.tokenSecret,
+			key: tokenOpts.secret,
 			validateFunc: jwtAuth.validate,
-			verifyOptions: { algorithms: [ 'HS256' ] }  // only allow HS256 algorithm
+			verifyOptions: { algorithms: tokenOpts.algorithms }
 		});
 
 		server.auth.strategy('basic', 'basic', {

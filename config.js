@@ -12,7 +12,10 @@ module.exports = {
 	},
 	auth: {
 		// App Settings
-		tokenSecret: process.env.TOKEN_SECRET || 'YOUR_UNIQUE_JWT_TOKEN_SECRET'
+		token: {
+			secret: process.env.TOKEN_SECRET || 'YOUR_UNIQUE_JWT_TOKEN_SECRET',
+			algorithms: [ 'HS256' ] // only allow HS256 algorithm
+		}
 
 		/*
 		 // OAuth 2.0

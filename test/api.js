@@ -30,7 +30,7 @@ describe('api/me', () => {
 
 
 	beforeEach((next) => {
-		const plugin = { register: Hapilizer, options: { auth: { tokenSecret: privateKey } } };
+		const plugin = { register: Hapilizer, options: { auth: { token: { secret: privateKey } } } };
 		const connection = { labels: 'api' };
 
 		server = new Hapi.Server();

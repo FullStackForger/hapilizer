@@ -12,7 +12,10 @@ internals.schema = Joi.object({
 		password: Joi.string().empty('')
 	}),
 	auth: Joi.object({
-		tokenSecret: Joi.string().required()
+		token: Joi.object({
+			secret: Joi.string().required(),
+			algorithms: Joi.array().items(Joi.string()).default(['HS256'])
+		})
 	}).required()
 });
 

@@ -31,7 +31,7 @@ internals.header = function (username, password) {
 };
 
 internals.beforeEach = function (next) {
-	const plugin = { register: Hapilizer, options: { auth: { tokenSecret: 'some key' } } };
+	const plugin = { register: Hapilizer, options: { auth: { token: { secret: 'some key' } } } };
 	const connection = { labels: 'api' };
 
 	server = new Hapi.Server();
@@ -64,10 +64,57 @@ describe('auth/login', () => {
 		});
 	});
 
+	it('should reply with Bad header (400) for GET with invalid header', (done) => {
+		server.inject({
+			url: '/auth/login',
+			method: 'GET',
+			headers: { Authorization: 'Basic invalid' }
+		}, (res) => {
+			expect(res.statusCode).to.equal(400);
+			done();
+		});
+	});
+
 	it('should reply (200) for GET with credentials', (done) => {
 		server.inject({
 			url: '/auth/login',
 			method: 'GET',
+			headers: {
+				authorization: internals.header('mark', 'some-password')
+			}
+		}, (res) => {
+			expect(res.statusCode).to.equal(200);
+			done();
+		});
+	})
+
+
+	it('should reply unauthorised (401) for POST with missing credentials', (done) => {
+		server.inject({
+			url: '/auth/login',
+			method: 'POST',
+			headers: { }
+		}, (res) => {
+			expect(res.statusCode).to.equal(401);
+			done();
+		});
+	});
+
+	it('should reply with Bad header (400) for POST with invalid header', (done) => {
+		server.inject({
+			url: '/auth/login',
+			method: 'POST',
+			headers: { Authorization: 'Basic invalid' }
+		}, (res) => {
+			expect(res.statusCode).to.equal(400);
+			done();
+		});
+	});
+
+	it('should reply (200) for POST with credentials', (done) => {
+		server.inject({
+			url: '/auth/login',
+			method: 'POST',
 			headers: {
 				authorization: internals.header('mark', 'some-password')
 			}

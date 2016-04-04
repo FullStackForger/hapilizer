@@ -9,8 +9,8 @@ const Hoek = require('hoek');
 const Lab = require('lab');
 
 // Load internal modules
-const hapilizer = require('../hapilizer');
-const mongoose = require('mongoose');
+const Hapilizer = require('../hapilizer');
+const Mongoose = require('mongoose');
 
 // Declare internals
 const internals = {};
@@ -34,12 +34,12 @@ describe('plugin', () => {
 	});
 
 	afterEach((next) => {
-		try { mongoose.connection.close() } catch (e) { } // no need to log anything
+		try { Mongoose.connection.close() } catch (e) { } // no need to log anything
 		next();
 	});
 
 	it('should not register without authentication options', (done) => {
-		const plugin = { register: hapilizer, options: { } };
+		const plugin = { register: Hapilizer, options: { } };
 		server.register(plugin, (err) => {
 			expect(err.isJoi).to.be.true;
 			expect(err.message).to.equal('child "auth" fails because ["auth" is required]');
@@ -48,7 +48,7 @@ describe('plugin', () => {
 	});
 
 	it('should not register with invalid database options', (done) => {
-		const plugin = { register: hapilizer, options: { database: null } };
+		const plugin = { register: Hapilizer, options: { database: null } };
 		server.register(plugin, (err) => {
 			expect(err.message).to.equal('child "database" fails because ["database" must be an object]');
 			done();
@@ -57,7 +57,7 @@ describe('plugin', () => {
 
 	it('should not register with invalid database options', (done) => {
 		const plugin = {
-			register: hapilizer,
+			register: Hapilizer,
 			options: {
 				database: { port: 'XXX' },
 				auth: { tokenSecret: 'secret'}
@@ -71,7 +71,7 @@ describe('plugin', () => {
 	});
 
 	it('should not register with invalid authentication options', (done) => {
-		const plugin = { register: hapilizer, options: { auth: { invalidValue: 123 } } };
+		const plugin = { register: Hapilizer, options: { auth: { invalidValue: 123 } } };
 		server.register(plugin, (err) => {
 			expect(err).to.not.be.null;
 			done();
@@ -79,7 +79,7 @@ describe('plugin', () => {
 	});
 
 	it('should register with default values', (done) => {
-		const plugin = { register: hapilizer, options: { auth: { tokenSecret: 'mySecret' } } };
+		const plugin = { register: Hapilizer, options: { auth: { token: { secret: 'my secret' } } } };
 		server.register(plugin, (err) => {
 			expect(err).to.not.exist();
 			done();
