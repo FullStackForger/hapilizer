@@ -1,12 +1,12 @@
-'use strict';
 const defaultCtrl = require('./default.js');
+const User = require('../model');
 
-exports.getMe = {
+exports.get = {
 	handler: defaultCtrl.any.handler,
-	auth: 'token'
+	auth: 'basic'
 };
 
-exports.putMe = {
+exports.put = {
 	handler: defaultCtrl.any.handler,
-	auth: 'token'
+	auth: 'basic'
 };

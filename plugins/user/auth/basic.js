@@ -1,20 +1,21 @@
 'use strict';
-const Bcrypt = require('bcrypt');
+const Boom = require('boom');
+
+const User = require('../model');
+const internal = require('../core/helpers');
 
 exports.validate = function (request, username, password, callback) {
-  // todo: extract from db
-	let credentials = { username: username };
+	User.findOne({ email: username }, '+password', function(err, user) {
+		const errMsg = 'Invalid email and/or password';
+		if (!user) return callback(Boom.unauthorized(errMsg), false);
 
-	if (!credentials) {
-		return callback(null, false);
-	}
-	
-	
-	return callback(null, true, credentials)
-	//todo: complete check
-	
-	Bcrypt.compare(password, credentials.password, (err, isValid) => {
+		user.comparePassword(password, function(err, matches) {
+			if (!matches) return callback(Boom.unauthorized(errMsg), false);
 
-		callback(err, isValid, credentials);
+			callback(null, true, {
+				token: internal.createJWT(user),
+				email: username
+			});
+		});
 	});
 };
