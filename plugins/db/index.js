@@ -11,26 +11,23 @@ const defaults = {
 };
 
 exports.register = function (server, options, next) {
-	let settings = Hoek.applyToDefaults(defaults, options);
+	const connection = Mongoose.connection;
+	const settings = Hoek.applyToDefaults(defaults, options);
 
-	Mongoose.connection.on('error', (error) => {
-		next(error);
-	});
+	// setup handlers
+	connection.once('open', () => next());
+	connection.once('error', (error) => next(error));
+	connection.once('disconnected', () => connection.removeAllListeners('error'));
 
-	Mongoose.connection.once('open', () => {
-		next();
-	});
-
-	Mongoose.connection.once('disconnected', () => {
-		Mongoose.connection.removeAllListeners('error');
-	});
-
+	// generate credentials
 	let credentials = '';
 	if (settings.username !== '' && settings.password !== '') {
 		credentials = settings.username + ':' + settings.password + '@';
 	}
+	let connectionURI = 'mongodb://' + credentials + settings.host + ':' + settings.port + '/' + settings.db;
 
-	Mongoose.connect('mongodb://' + credentials + settings.host + ':' + settings.port + '/' + settings.db);
+	// connect to database
+	Mongoose.connect(connectionURI);
 };
 
 exports.register.attributes = {
