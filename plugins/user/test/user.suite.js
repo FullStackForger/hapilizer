@@ -4,13 +4,16 @@ const Hapi = require('hapi');
 const JWT = require('jsonwebtoken');
 
 const Mongoose = require('mongoose');
+const Forger = require('forger');
+
 const UserPlugin = require('../');
+const User = require('../model');
 
 const expect = Code.expect;
 const suite = module.exports = {};
 
 const optionsMock = require('./options.mock');
-const userDataMock = require('./userData.mock');
+const userMockData = require('./userData.mock');
 
 suite.server = null;
 
@@ -57,20 +60,44 @@ suite.db.disconnect = function (next) {
 };
 
 suite.db.resetDatabase = function (next) {
-	suite.db.dropDatabase(()=> {
-		suite.db.importUserData(next);
+	suite.db.dropDatabase((err)=> {
+		expect(err).to.not.exist();
+
+		suite.db.importUserData((err) => {
+			expect(err).to.not.exist();
+			next();
+		});
 	})
 };
 
 suite.db.dropDatabase = function (next) {
 	expect(Mongoose.connection.db).to.exist();
-	Mongoose.connection.db
-		.dropDatabase()
-		.then(next)
-		.catch((err) => expect(err).to.not.exist());
+	Mongoose.connection.db.dropDatabase((err) => {
+		expect(err).to.not.exist();
+		next();
+	})
 };
 
 suite.db.importUserData = function (next) {
-	// todo: import mock data
-	next();
+	let index = 0;
+	const saveUser = function (complete) {
+		new User( userMockData[index] ).save((err, user) => {
+			index ++;
+			complete();
+		});
+	};
+	const inProgress = function () {
+		return index < userMockData.length;
+	};
+
+	Forger
+		.doWhile(saveUser, inProgress)
+		.then(() => {
+			next()
+		}).catch((err) => {
+			expect(err).to.not.exist();
+			next(err)
+		});
+
+
 };
