@@ -22,9 +22,8 @@ exports.register = function (server, options, next) {
 		});
 
 		server.route(routes);
+		next();
 	});
-
-	next();
 };
 
 exports.register.attributes = {
