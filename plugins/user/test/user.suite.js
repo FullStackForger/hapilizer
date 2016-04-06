@@ -5,6 +5,7 @@ const JWT = require('jsonwebtoken');
 
 const Mongoose = require('mongoose');
 const Forger = require('forger');
+const Moment = require('moment');
 
 const UserPlugin = require('../');
 const User = require('../model');
