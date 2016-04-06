@@ -3,5 +3,5 @@ const User = require('../model');
 
 exports.get = {
 	handler: defaultCtrl.any.handler,
-	auth: 'basic'
+	auth: 'false'
 };
