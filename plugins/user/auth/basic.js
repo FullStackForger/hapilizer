@@ -13,9 +13,9 @@ exports.validate = function (request, username, password, callback) {
 			if (!matches) return callback(Boom.unauthorized(errMsg), false);
 
 			//const secret = request.server.registrations.user.options.auth.token.secret;
-			const Helpers = request.route.realm.pluginOptions.auth.token;
+			const secret = request.route.realm.pluginOptions.auth.token.secret;
 			callback(null, true, {
-				token: internal.createJWT(user, secret),
+				token: Helpers.createJWT(user, secret),
 				email: username
 			});
 		});
