@@ -11,7 +11,8 @@ exports.register = function (server, options, next) {
 	server.register(plugins, function (error) {
 		const tokenOpts = options.auth.token;
 
-		server.auth.strategy('token', 'jwt', {
+		// set default strategy
+		server.auth.strategy('jwt', 'jwt', true, {
 			key: tokenOpts.secret,
 			validateFunc: jwtAuth.validate,
 			verifyOptions: { algorithms: tokenOpts.algorithms }
