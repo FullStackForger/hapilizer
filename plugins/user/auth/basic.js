@@ -2,7 +2,7 @@
 const Boom = require('boom');
 
 const User = require('../model');
-const internal = require('../core/helpers');
+const Helpers = require('../core/helpers');
 
 exports.validate = function (request, username, password, callback) {
 	User.findOne({ email: username }, '+password', function(err, user) {
@@ -12,8 +12,10 @@ exports.validate = function (request, username, password, callback) {
 		user.comparePassword(password, function(err, matches) {
 			if (!matches) return callback(Boom.unauthorized(errMsg), false);
 
+			//const secret = request.server.registrations.user.options.auth.token.secret;
+			const Helpers = request.route.realm.pluginOptions.auth.token;
 			callback(null, true, {
-				token: internal.createJWT(user),
+				token: internal.createJWT(user, secret),
 				email: username
 			});
 		});
