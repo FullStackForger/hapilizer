@@ -38,7 +38,7 @@ function handleRequest(request, reply) {
 
 	function replyWithToken (user) {
 		//const secret = request.server.registrations.user.options.auth.token.secret;
-		const secret = reply.realm.pluginOptions.auth.token;
+		const secret = reply.realm.pluginOptions.auth.token.secret;
 		reply({
 			token: Helpers.createJWT(user, secret)
 		});
