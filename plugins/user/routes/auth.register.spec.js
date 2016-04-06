@@ -20,6 +20,7 @@ const expect = Code.expect;
 
 before(Suite.setupServer);
 before(Suite.db.connect);
+after(Suite.db.dropDatabase);
 after(Suite.db.disconnect);
 
 describe('POST /auth/register', () => {
