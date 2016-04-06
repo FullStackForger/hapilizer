@@ -6,6 +6,7 @@ const Lab = require('lab');
 // Internals
 const Suite = require('../test/user.suite');
 const Forger = require('forger');
+const Sinon = require('sinon');
 
 // Helpers
 const lab = exports.lab = Lab.script();
@@ -86,7 +87,23 @@ describe('POST /auth/register', () => {
 	});
 
 	it('should reply with internal error (500) when something goes wrong', (done) => {
-		done('not implemented yet');
+		const handlerStub = Sinon.stub(require('../model'), 'findOne', function() {
+			throw new Error('something broke');
+		});
+
+		Suite.server.inject({
+			url: '/auth/register',
+			method: 'POST',
+			payload: {
+				email: 'test.user@gmail.com',
+				displayName: 'IndieForger',
+				password: 'indie.forger'
+			}
+		}, (res) => {
+			expect(res.statusCode).to.equal(500);
+			handlerStub.restore();
+			done();
+		});
 	});
 
 });

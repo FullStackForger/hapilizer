@@ -32,6 +32,7 @@
   "devDependencies": {
     "code": "^2.1.1",
     "jsonwebtoken": "^5.7.0",
-    "lab": "^10.3.0"
+    "lab": "^10.3.0",
+    "sinon": "^1.17.3"
   }
 }
