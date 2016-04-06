@@ -21,7 +21,7 @@ suite.setupServer = function (next) {
 	const plugin = { register: UserPlugin, options: optionsMock };
 	const connection = { labels: 'api' };
 
-	suite.server = new Hapi.Server();
+	suite.server = new Hapi.Server({ debug: false });
 	suite.server.connection(connection);
 	suite.server.register(plugin, (err) => {
 		next(err);
@@ -45,7 +45,7 @@ suite.header.getJWTAuthorization = function (user) {
 suite.db = {};
 
 suite.db.connect = function (next) {
-	const connectionURI = `mongodb://localhost/maitredhotel_test_auth_service_${Date.now()}`;
+	const connectionURI = `mongodb://localhost/hapilizer_test_db_${Date.now()}`;
 	Mongoose.connect(connectionURI, (err) => {
 		expect(err).to.not.exist();
 		next();
@@ -72,7 +72,7 @@ suite.db.resetDatabase = function (next) {
 
 suite.db.dropDatabase = function (next) {
 	expect(Mongoose.connection.db).to.exist();
-	Mongoose.connection.db.dropDatabase((err) => {
+	Mongoose.connection.db.dropDatabase((err, result) => {
 		expect(err).to.not.exist();
 		next();
 	})
@@ -98,6 +98,4 @@ suite.db.importUserData = function (next) {
 			expect(err).to.not.exist();
 			next(err)
 		});
-
-
 };
