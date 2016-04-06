@@ -10,9 +10,9 @@ exports.post = {
 	auth: false,
 	validate: {
 		payload: {
-			email: Joi.string().email(),
-			displayName: Joi.string().min(3).max(40),
-			password: Joi.string().min(3).max(20)
+			email: Joi.string().email().required(),
+			displayName: Joi.string().min(3).max(40).required(),
+			password: Joi.string().min(3).max(20).required()
 		}
 	}
 };
