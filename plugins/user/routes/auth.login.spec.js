@@ -12,11 +12,13 @@ const describe = lab.describe;
 const before = lab.before;
 const beforeEach = lab.beforeEach;
 const afterEach = lab.afterEach;
+const after = lab.after;
 const it = lab.it;
 const expect = Code.expect;
 
 before(Suite.setupServer);
 before(Suite.db.connect);
+after(Suite.db.disconnect);
 
 describe('GET /auth/login', () => {
 
