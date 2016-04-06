@@ -1,3 +1,4 @@
+'use strict';
 const defaultCtrl = require('./default.js');
 const User = require('../model');
 
