@@ -1,6 +1,9 @@
 'use strict';
 const User = require('../model');
 const Joi = require('joi');
+const Boom = require('boom');
+
+const Helpers = require('../core/helpers');
 
 exports.post = {
 	handler: handleRequest,
@@ -21,7 +24,7 @@ function handleRequest(request, reply) {
 		.then(replyWithToken)
 		.catch(reportError);
 
-	const registerUser = function (user) {
+	function registerUser (user) {
 		if (user) return Promise.reject(Boom.conflict('Email is already taken'));
 
 		user = new User({
@@ -31,16 +34,18 @@ function handleRequest(request, reply) {
 		});
 
 		return user.save();
-	};
+	}
 
-	const replyWithToken = function (user) {
+	function replyWithToken (user) {
+		//const secret = request.server.registrations.user.options.auth.token.secret;
+		const secret = reply.realm.pluginOptions.auth.token;
 		reply({
-			token: internal.createJWT(user)
+			token: Helpers.createJWT(user, secret)
 		});
-	};
+	}
 
-	const reportError = function (error) {
+	function reportError (error) {
 		if (error.isBoom) return reply(error);
 		return reply(Boom.badImplementation(error.message));
-	};
+	}
 }
