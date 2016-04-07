@@ -14,7 +14,7 @@ module.exports = [
 	// user endpoints
 	{ path: '/user/me', method: 'GET', config: Routes.user.me.get },
 	{ path: '/user/me', method: 'PUT', config: Routes.user.me.put },
-
+	{ path: '/user/{userId}', method: 'GET', config: Routes.user.profile.get },
 	// basic authentication
 	{ path: '/auth/login', method: 'GET', config: Routes.auth.login.get },
 	{ path: '/auth/login', method: 'POST', config: Routes.auth.login.post },
