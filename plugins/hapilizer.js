@@ -12,7 +12,7 @@ const Lab = require('lab');
 const Hapilizer = require('../hapilizer');
 const Mongoose = require('mongoose');
 
-// Declare internals
+// Declare suite
 const internals = {};
 
 // Test shortcuts
