@@ -1,12 +1,32 @@
-const defaultCtrl = require('./default.js');
+'user strict';
+const Boom = require('boom');
 const User = require('../model');
 
 exports.get = {
-	handler: defaultCtrl.any.handler,
-	auth: 'basic'
+	handler: handleGetMe,
+	auth: 'jwt'
 };
 
 exports.put = {
-	handler: defaultCtrl.any.handler,
-	auth: 'basic'
+	handler: handlePutMe,
+	auth: 'jwt'
 };
+
+function handleGetMe(request, reply) {
+	reply(request.auth.user);
+}
+
+function handlePutMe(request, reply) {
+	User.findById(request.auth.credentials.user._id, function(err, user) {
+		if (err) return reply(Boom.badImplementation('Server error'));
+		if (!user) return reply(Boom.badImplementation(`User doesn't exist`));
+
+		user.displayName = request.payload.displayName || user.displayName;
+		user.email = request.payload.email || user.email;
+
+		user.save(function(err) {
+			if (err) return reply(Boom.badImplementation('Server error'));
+			reply('OK');
+		});
+	});
+}
