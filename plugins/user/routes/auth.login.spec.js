@@ -5,6 +5,8 @@ const Lab = require('lab');
 
 // Internals
 const Suite = require('../test/user.suite');
+const Forger = require('forger');
+const Sinon = require('sinon');
 
 // Helpers
 const lab = exports.lab = Lab.script();
@@ -25,7 +27,7 @@ describe('GET /auth/login', () => {
 
 	beforeEach(Suite.db.resetDatabase);
 
-	it('should reply (200)', (done) => {
+	it('should reply (200) with token', (done) => {
 		Suite.server.inject({
 			url: '/auth/login',
 			method: 'GET',
@@ -34,6 +36,7 @@ describe('GET /auth/login', () => {
 			}
 		}, (res) => {
 			expect(res.statusCode).to.equal(200);
+			expect(res.payload.token).to.not.be.null();
 			done();
 		});
 	});
@@ -42,7 +45,7 @@ describe('GET /auth/login', () => {
 		Suite.server.inject({
 			url: '/auth/login',
 			method: 'GET',
-			headers: {}
+			headers: { /* missing Authorization header */ }
 		}, (res) => {
 			expect(res.statusCode).to.equal(401);
 			done();
@@ -53,9 +56,27 @@ describe('GET /auth/login', () => {
 		Suite.server.inject({
 			url: '/auth/login',
 			method: 'GET',
-			headers: {Authorization: 'Basic invalid'}
+			headers: { Authorization: 'Basic invalid' }
 		}, (res) => {
 			expect(res.statusCode).to.equal(400);
+			done();
+		});
+	});
+
+	it('should reply with internal error (500) when something goes wrong', (done) => {
+		const handlerStub = Sinon.stub(require('../model'), 'findOne', function() {
+			throw new Error('something broke');
+		});
+
+		Suite.server.inject({
+			url: '/auth/login',
+			method: 'GET',
+			headers: {
+				authorization: Suite.header.getBasicAuthorization('test.user@gmail.com', 'test.user')
+			}
+		}, (res) => {
+			expect(res.statusCode).to.equal(500);
+			handlerStub.restore();
 			done();
 		});
 	});
@@ -65,37 +86,67 @@ describe('POST /auth/login', () => {
 
 	beforeEach(Suite.db.resetDatabase);
 
-	it('should reply (200) for POST with credentials', (done) => {
+	it('should reply (200) for POST with token', (done) => {
 		Suite.server.inject({
 			url: '/auth/login',
 			method: 'POST',
-			headers: {
-				authorization: Suite.header.getBasicAuthorization('test.user@gmail.com', 'test.user')
+			payload: {
+				email: 'test.user@gmail.com',
+				password: 'test.user'
 			}
 		}, (res) => {
 			expect(res.statusCode).to.equal(200);
+			expect(res.payload.token).to.not.be.null();
 			done();
 		});
 	});
 
-	it('should reply unauthorised (401) for POST with missing credentials', (done) => {
+	it('should reply unauthorised (401) for invalid credentials', (done) => {
 		Suite.server.inject({
 			url: '/auth/login',
 			method: 'POST',
-			headers: { }
+			payload: {
+				email: 'test.user@gmail.com',
+				password: 'wrong.password'
+			}
 		}, (res) => {
 			expect(res.statusCode).to.equal(401);
 			done();
 		});
 	});
 
-	it('should reply with Bad header (400) for POST with invalid header', (done) => {
+	it('should reply with bad request (400) for missing credentials', (done) => {
+		const sendRequest = function ( payload, next ) {
+			Suite.server.inject({ url: '/auth/login', method: 'POST', payload: payload }, (res) => {
+				expect(res.statusCode).to.equal(400);
+				next();
+			});
+		};
+
+		Forger.sequence(
+			(next) => { sendRequest( { /*email: 'new.user@gmail.com', password: 'indie.forger'*/ }, next )},
+			(next) => { sendRequest( { /*email: 'new.user@gmail.com',*/ password: 'indie.forger' }, next )},
+			(next) => { sendRequest( { email: 'new.user@gmail.com' /*, password: 'indie.forger'*/ }, next )}
+			)
+			.then(() => done())
+			.catch((err) => done(err));
+	});
+
+	it('should reply with internal error (500) when something goes wrong', (done) => {
+		const handlerStub = Sinon.stub(require('../model'), 'findOne', function() {
+			throw new Error('something broke');
+		});
+
 		Suite.server.inject({
 			url: '/auth/login',
 			method: 'POST',
-			headers: { Authorization: 'Basic invalid' }
+			payload: {
+				email: 'test.user@gmail.com',
+				password: 'test.user'
+			}
 		}, (res) => {
-			expect(res.statusCode).to.equal(400);
+			expect(res.statusCode).to.equal(500);
+			handlerStub.restore();
 			done();
 		});
 	});
