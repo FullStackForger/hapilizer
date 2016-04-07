@@ -2,7 +2,6 @@ const Routes = {
 	default: require('./routes/default.js'),
 	auth: {
 		login: require('./routes/auth.login'),
-		logout: require('./routes/auth.logout'),
 		register: require('./routes/auth.register')
 	},
 	user: {
@@ -15,10 +14,10 @@ module.exports = [
 	// user endpoints
 	{ path: '/user/me', method: 'GET', config: Routes.user.me.get },
 	{ path: '/user/me', method: 'PUT', config: Routes.user.me.put },
+
 	// basic authentication
 	{ path: '/auth/login', method: 'GET', config: Routes.auth.login.get },
 	{ path: '/auth/login', method: 'POST', config: Routes.auth.login.post },
-	{ path: '/auth/logout', method: 'POST', config: Routes.auth.logout.get },
 	{ path: '/auth/register', method: 'POST', config: Routes.auth.register.post },
 	// social authentication
 	{ path: '/auth/google', method: 'POST', config: Routes.default.any },
