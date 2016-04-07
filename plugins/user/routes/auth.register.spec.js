@@ -57,7 +57,7 @@ describe('POST /auth/register', () => {
 		const sendRequest = function ( payload, next ) {
 			Suite.server.inject({ url: '/auth/register', method: 'POST', payload: payload }, (res) => {
 				expect(res.statusCode).to.equal(400);
-				done();
+				next();
 			});
 		};
 
