@@ -32,10 +32,10 @@ exports.register = function (server, options, next) {
 			relativeTo: require('path').join(__dirname, './client')
 		}
 	},{
-		register: require('./plugins/db'),
+		register: require('./db/index'),
 		options: { database: options.database }
 	},{
-		register: require('./plugins/user'),
+		register: require('./user/index'),
 		options: { auth: options.auth }
 	}];
 	
@@ -43,5 +43,5 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-	pkg: require('./package.json')
+	pkg: require('./../package.json')
 };

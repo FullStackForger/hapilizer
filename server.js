@@ -2,7 +2,7 @@ const Hapi = require('hapi');
 const Hoek = require('hoek');
 
 const config = require('./config');
-const hapilizer = require('./hapilizer');
+const hapilizer = require('./plugins/hapilizer');
 
 const server = new Hapi.Server();
 const connection = {

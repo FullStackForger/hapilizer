@@ -9,7 +9,7 @@ const Hoek = require('hoek');
 const Lab = require('lab');
 
 // Load internal modules
-const Hapilizer = require('../hapilizer');
+const Hapilizer = require('./hapilizer');
 const Mongoose = require('mongoose');
 
 // Declare suite
