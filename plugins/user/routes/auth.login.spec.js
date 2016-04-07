@@ -36,7 +36,7 @@ describe('GET /auth/login', () => {
 			}
 		}, (res) => {
 			expect(res.statusCode).to.equal(200);
-			expect(res.payload.token).to.not.be.null();
+			expect(res.result.token).to.be.string();
 			done();
 		});
 	});
@@ -96,7 +96,7 @@ describe('POST /auth/login', () => {
 			}
 		}, (res) => {
 			expect(res.statusCode).to.equal(200);
-			expect(res.payload.token).to.not.be.null();
+			expect(res.result.token).to.be.string();
 			done();
 		});
 	});
