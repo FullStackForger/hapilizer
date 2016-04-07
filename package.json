@@ -21,7 +21,7 @@
     "boom": "^3.1.2",
     "forger": "^1.4.0",
     "hapi": "^13.2.1",
-    "hapi-app-spa": "^0.3.0",
+    "hapi-app-spa": "^0.4.1",
     "hapi-auth-basic": "^4.1.0",
     "hapi-auth-jwt2": "^5.4.1",
     "hoek": "^3.0.4",

@@ -26,10 +26,13 @@ exports.register = function (server, options, next) {
 	const plugins = [{
 		register: require('hapi-app-spa'),
 		options: {
+			auth: false,
 			index: 'index.html',
-			assets: ['css', 'app', 'vendor', 'partials'],
-			//assets: ['css', 'img', 'js', 'partials', 'files'],
-			relativeTo: require('path').join(__dirname, './client')
+			assets: [
+				'css', 'app', 'vendor', 'partials',   // <- assets
+				'auth', 'user'                        // <- endpoints
+			],
+			relativeTo: './client'
 		}
 	},{
 		register: require('./db/index'),
