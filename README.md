@@ -2,7 +2,7 @@
 
 > WORK IN PROGRESS
 
-## About 
+## Motivation 
 
 **[Satellizer][1]** is a simple to use, end-to-end, token-based authentication module 
 for [AngularJS][2] with built-in support for Google, Facebook, LinkedIn, Twitter, Instagram, GitHub, 
@@ -18,15 +18,30 @@ developers to focus on writing reusable application logic in a highly modular an
 
 ## API Endpoints 
 
+(implemented)
+
 Endpoint        | Method    | Auth. | Description
 ----------------|-----------|-------|-------------------
-/me             | GET       | jwt   | user info    
-/auth/signup    | POST      | none  | registers user account
+/user/me        | GET       | jwt   | user info    
+/user/profile   | GET       | jwt   | user info    
+/auth/register  | POST      | -     | registers user account
 /auth/login     | GET       | basic | login with username and password
 /auth/login     | POST      | basic | login with username and password
-/auth/facebook  | POST      | jwt   | login with Facebook
-/auth/twitter   | POST      | jwt   | login with Twitter
-/auth/google    | POST      | jwt   | login with Google
+
+(coming next)
+
+Endpoint        | Method    | Auth. | Description
+----------------|-----------|-------|-------------------
+/auth/facebook  | POST      | post  | login with Facebook
+/auth/twitter   | POST      | post  | login with Twitter
+/auth/google    | POST      | post  | login with Google
+
+
+## Client
+
+Currently client is a copy of satellizer example made for angular 1.0.
+It is not yet integrated with hapilizer API. (hopefully will be in couple of days)
+
 
 [1]: https://github.com/sahat/satellizer
 [2]: http://angularjs.org
