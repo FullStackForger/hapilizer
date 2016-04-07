@@ -43,9 +43,10 @@ describe('GET /user/me', () => {
 				}
 			}, (res) => {
 				expect(res.statusCode).to.equal(200);
-				expect(res.payload.token).to.not.be.null();
-				expect(res.payload.email).to.not.be.null();
-				expect(res.payload.displayName).to.not.be.null();
+				expect(res.payload).to.exist();
+				expect(res.result).to.exist();
+				expect(res.result.email).to.be.string();
+				expect(res.result.displayName).to.be.string();
 				done();
 			});
 		}

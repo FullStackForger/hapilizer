@@ -13,7 +13,7 @@ exports.put = {
 };
 
 function handleGetMe(request, reply) {
-	reply(request.auth.user);
+	reply(request.auth.credentials.user);
 }
 
 function handlePutMe(request, reply) {
