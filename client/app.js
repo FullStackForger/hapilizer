@@ -14,10 +14,10 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
           skipIfLoggedIn: skipIfLoggedIn
         }
       })
-      .state('signup', {
-        url: '/signup',
-        templateUrl: 'partials/signup.html',
-        controller: 'SignupCtrl',
+      .state('register', {
+        url: '/register',
+        templateUrl: 'partials/register.html',
+        controller: 'RegisterCtrl',
         resolve: {
           skipIfLoggedIn: skipIfLoggedIn
         }
