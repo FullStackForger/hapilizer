@@ -11,7 +11,7 @@ const unauthorizedMsg = 'Invalid email and/or password';
 exports.get = {
 	auth: 'basic',
 	handler: function (request, reply) {
-		reply({ token: request.auth.credentials.token });
+		reply({ access_token: request.auth.credentials.token });
 	}
 };
 
@@ -32,7 +32,7 @@ exports.post = {
 					return reply(Boom.unauthorized(unauthorizedMsg));
 				}
 				const secret = reply.realm.pluginOptions.auth.token.secret;
-				reply({ token: Helpers.createJWT(user, secret) });
+				reply({ access_token: Helpers.createJWT(user, secret) });
 			});
 		});
 	}
