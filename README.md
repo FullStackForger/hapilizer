@@ -42,20 +42,24 @@ It is not yet integrated with hapilizer API. (hopefully will be in couple of day
 
 ## Resources
 
-### Angular Plugins
+### Social Login API - providers documentation
+  - [Twitter for websites: Sign in with Twitter](https://dev.twitter.com/web/sign-in)
+  - [Sign in with Google](https://developers.google.com/identity/sign-in/web/)
+  - [Sign in with Facebook](https://developers.facebook.com/docs/facebook-login/web)
+    - [Expiration and Extension of Access Tokens](https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension)
+    - [Access Tokens](https://developers.facebook.com/docs/facebook-login/access-tokens)
+  - [Sign in with LinkedIn]()
+  
+### Interesting Angular Plugins
  - [angularjs-social-login][4] - social login with Google, FB, LinkedIN.
  - [angular-social-login][5] - social login with Google & Facebook for PhoneGap/Cordova.
  - [satellizer][6] - end-to-end, token-based authentication module for AngularJS with built-in support for Google, Facebook, LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email and Password sign-in.
  
-### Node Packages
+### Good Node Packages
  - [hapi][3] - configuration-centric framework with built-in support for input validation, caching,
    authentication, and other essential facilities for building web and services applications.
 
-### Social APIs
-  - [Twitter for websites: Sign in with Twitter](https://dev.twitter.com/web/sign-in)
-  - [Sign in with Google](https://developers.google.com/identity/sign-in/web/)
-  - [Sign in with Facebook]()
-  - [Sign in with LinkedIn]()
+
 
 [2]: http://angularjs.org
 [3]: https://github.com/hapijs/hapi
