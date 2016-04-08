@@ -55,11 +55,16 @@ It is not yet integrated with hapilizer API. (hopefully will be in couple of day
  - [angular-social-login][5] - social login with Google & Facebook for PhoneGap/Cordova.
  - [satellizer][6] - end-to-end, token-based authentication module for AngularJS with built-in support for Google, Facebook, LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email and Password sign-in.
  
-### Good Node Packages
+### Awesome Node Packages
  - [hapi][3] - configuration-centric framework with built-in support for input validation, caching,
    authentication, and other essential facilities for building web and services applications.
-
-
+ - moment
+ - jsonwebtoken
+ - bcrypt
+ - mongoose
+ - hapi-app-spa
+ - forger
+ 
 
 [2]: http://angularjs.org
 [3]: https://github.com/hapijs/hapi
