@@ -51,7 +51,7 @@ angular.module('MyApp', dependencies)
       .state('profile', {
         url: '/profile',
         templateUrl: 'partials/profile.html',
-        controller: 'ProfileCtrl',
+        controller: 'ProfileController',
         resolve: {
           loginRequired: loginRequired
         }
@@ -86,9 +86,9 @@ angular.module('MyApp', dependencies)
       return deferred.promise;
     }
 
-    function loginRequired($q, $location, $auth) {
+    function loginRequired($q, $location, $auth, auth) {
       var deferred = $q.defer();
-      if ($auth.isAuthenticated()) {
+      if ($auth.isAuthenticated() || auth.isAuthenticated()) {
         deferred.resolve();
       } else {
         $location.path('/login');
