@@ -11,9 +11,6 @@ and Password sign-in. However, you are not limited to the sign-in options above,
 you can add any *OAuth 1.0* or *OAuth 2.0* provider by passing provider-specific information
 in the app *config* block.
 
-**[hapi][3]** is a simple to use configuration-centric framework with built-in support for input validation, caching,
-authentication, and other essential facilities for building web and services applications. **hapi** enables
-developers to focus on writing reusable application logic in a highly modular and prescriptive approach.
 
 
 ## API Endpoints 
@@ -43,6 +40,25 @@ Currently client is a copy of satellizer example made for angular 1.0.
 It is not yet integrated with hapilizer API. (hopefully will be in couple of days)
 
 
-[1]: https://github.com/sahat/satellizer
+## Resources
+
+### Angular Plugins
+ - [angularjs-social-login][4] - social login with Google, FB, LinkedIN.
+ - [angular-social-login][5] - social login with Google & Facebook for PhoneGap/Cordova.
+ - [satellizer][6] - end-to-end, token-based authentication module for AngularJS with built-in support for Google, Facebook, LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email and Password sign-in.
+ 
+### Node Packages
+ - [hapi][3] - configuration-centric framework with built-in support for input validation, caching,
+   authentication, and other essential facilities for building web and services applications.
+
+### Social APIs
+  - [Twitter for websites: Sign in with Twitter](https://dev.twitter.com/web/sign-in)
+  - [Sign in with Google](https://developers.google.com/identity/sign-in/web/)
+  - [Sign in with Facebook]()
+  - [Sign in with LinkedIn]()
+
 [2]: http://angularjs.org
 [3]: https://github.com/hapijs/hapi
+[4]: https://github.com/indieforger/angularjs-social-login
+[5]: https://github.com/Paldom/angular-social-login
+[6]: https://github.com/sahat/satellizer
