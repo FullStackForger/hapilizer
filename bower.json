@@ -24,6 +24,7 @@
     "angular-toastr": "^1.7.0",
     "angular-ui-router": "^0.2.18",
     "angular-sanitize": "^1.5.3",
-    "satellizer": "^0.14.0"
+    "satellizer": "^0.14.0",
+    "angularjs-social-login": "*"
   }
 }
