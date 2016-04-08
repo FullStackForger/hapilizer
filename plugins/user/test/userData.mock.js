@@ -5,5 +5,9 @@ module.exports = [{
 }, {
 	email: 'another.user@gmail.com',
 	displayName: 'Another User',
-	password: 'another.user'
+	password: 'another.user',
+	bio: `
+		Regular geek with **markdown bio**,
+		including some links to [google][http://google.com] search engine.
+	`
 }];

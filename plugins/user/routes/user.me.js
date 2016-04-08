@@ -23,6 +23,7 @@ function handlePutMe(request, reply) {
 
 		user.displayName = request.payload.displayName || user.displayName;
 		user.email = request.payload.email || user.email;
+		user.bio = request.payload.bio || user.bio;
 
 		user.save(function(err) {
 			if (err) return reply(Boom.badImplementation('Server error'));

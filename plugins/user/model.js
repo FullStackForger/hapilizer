@@ -5,6 +5,7 @@ var userSchema = new Mongoose.Schema({
 	email: { type: String, unique: true, lowercase: true },
 	password: { type: String, select: false },
 	displayName: String,
+	bio: String,
 	picture: String,
 	bitbucket: String,
 	facebook: String,

@@ -26,7 +26,7 @@ describe('GET /user/me', () => {
 
 	beforeEach(Suite.db.resetDatabase);
 
-	it('should reply (200) with user profile', (done) => {
+	it('should reply (200) with user partial profile', (done) => {
 		User
 			.findOne({ email: 'test.user@gmail.com' })
 			.then(requestProfile)
@@ -47,6 +47,34 @@ describe('GET /user/me', () => {
 				expect(res.result).to.exist();
 				expect(res.result.email).to.be.string();
 				expect(res.result.displayName).to.be.string();
+				expect(res.result.bio).to.be.undefined();       // <- user is without bio
+				done();
+			});
+		}
+	});
+
+	it('should reply (200) with user complete profile', (done) => {
+		User
+			.findOne({ email: 'another.user@gmail.com' })
+			.then(requestProfile)
+			.catch((err) => done(err) );
+
+		function requestProfile (user) {
+			expect(user).to.not.be.null();
+
+			Suite.server.inject({
+				url: '/user/me',
+				method: 'GET',
+				headers: {
+					authorization: Suite.header.getJWTAuthorization(user)
+				}
+			}, (res) => {
+				expect(res.statusCode).to.equal(200);
+				expect(res.payload).to.exist();
+				expect(res.result).to.exist();
+				expect(res.result.email).to.be.string();
+				expect(res.result.displayName).to.be.string();
+				expect(res.result.bio).to.be.string();        // <- user is without bio
 				done();
 			});
 		}
