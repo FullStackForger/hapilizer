@@ -46,7 +46,7 @@ suite.header.getJWTAuthorization = function (user) {
 suite.db = {};
 
 suite.db.connect = function (next) {
-	const connectionURI = `mongodb://localhost/hapilizer_test_db}`; // ${Date.now()}
+	const connectionURI = `mongodb://localhost/hapilizer_test_db`; // ${Date.now()}
 	Mongoose.connect(connectionURI, (err) => {
 		expect(err).to.not.exist();
 		next();
