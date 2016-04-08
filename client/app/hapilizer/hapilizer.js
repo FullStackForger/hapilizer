@@ -75,12 +75,12 @@ function hapilizerAuth(config) {
 		}
 	});
 
-	this.$get = function(internal, shared) {
+	this.$get = function(hapilizerInternal, hapilizerShared) {
 		return {
-			login: internal.login,
-			register: internal.register,
-			logout: internal.logout,
-			isAuthenticated: shared.isAuthenticated
+			isAuthenticated: hapilizerShared.isAuthenticated,
+			login: hapilizerInternal.login,
+			logout: hapilizerInternal.logout,
+			register: hapilizerInternal.register
 		};
 	};
 
@@ -88,8 +88,8 @@ function hapilizerAuth(config) {
 }
 
 angular.module('hapilizer').service('hapilizerInternal', internal);
-internal.$inject = ['$http', 'hapilizerUtils', 'hapilizerConfig', 'hapilizerShared'];
-function internal($http, utils, config, shared) {
+internal.$inject = ['$http', '$q', 'hapilizerUtils', 'hapilizerConfig', 'hapilizerShared', 'hapilizerStore'];
+function internal($http, $q, utils, config, shared, store) {
 
 	this.login = function(user, opts) {
 		opts = opts || {};
@@ -102,6 +102,11 @@ function internal($http, utils, config, shared) {
 			shared.setToken(response);
 			return response;
 		});
+	};
+
+	this.logout = function() {
+		store.remove(config.tokenName);
+		return $q.when();
 	};
 
 	this.register = function(user, opts) {

@@ -46,7 +46,7 @@ angular.module('MyApp', dependencies)
       .state('logout', {
         url: '/logout',
         template: null,
-        controller: 'LogoutCtrl'
+        controller: 'LogoutController'
       })
       .state('profile', {
         url: '/profile',
