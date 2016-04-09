@@ -80,6 +80,8 @@ function hapilizerAuth(config) {
 			isAuthenticated: hapilizerShared.isAuthenticated,
 			login: hapilizerInternal.login,
 			logout: hapilizerInternal.logout,
+			//link: hapilizerInternal.link,   // todo
+			//unlink: hapilizerInternal.unlink, // todo
 			register: hapilizerInternal.register
 		};
 	};
