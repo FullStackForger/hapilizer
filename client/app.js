@@ -50,7 +50,7 @@ angular.module('MyApp', dependencies)
       })
       .state('profile', {
         url: '/profile',
-        templateUrl: 'partials/profile.html',
+        templateUrl: 'partials/profile.tpl.html',
         controller: 'ProfileController',
         resolve: {
           loginRequired: loginRequired
