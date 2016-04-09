@@ -27,6 +27,7 @@ angular.module('hapilizer').constant('hapilizer.config', {
 		},
 		linkedin: {
 			clientId: undefined,
+			scope: [ 'r_basicprofile', 'r_emailaddress' ],
 			ready: false
 		},
 		google: {
@@ -136,7 +137,7 @@ function internal($http, $q, utils, config, shared, store) {
 		switch(provider) {
 
 			case 'facebook':
-				if (!FB instanceof Object) return $q.reject('FB SDK is not available');
+				if (!FB instanceof Object) return $q.reject('Facebook SDK is not available');
 				if (!config.facebookReady) FB.init(config.providers.facebook);
 				config.facebookReady = true;
 				FB.login(function(response) {
@@ -149,7 +150,22 @@ function internal($http, $q, utils, config, shared, store) {
 				break;
 
 			case 'linkedin':
-
+				if (!IN instanceof Object) return $q.reject('LinkedIn SDK is not available');
+				//if (!config.facebookReady) FB.init(config.providers.facebook);
+				IN.Event.on(IN, "auth", function () {
+					debugger;
+					//r_emailaddress
+					//IN.API.Raw("/people/~:(id,first-name,last-name,email-address)").result(function(res){
+					IN.API.Raw("/people/~:(id,first-name,last-name,email-address)").result(function(res){
+						//socialLoginService.setProviderCookie("linkedIn");
+						debugger;
+						var userDetails = {name: res.firstName + " " + res.lastName, email: res.emailAddress, uid: res.id, provider: "linkedIN"}
+						$rootScope.$broadcast('event:social-sign-in-success', userDetails);
+					});
+				});
+				IN.User.authorize(function () {
+					debugger;
+				});
 				break;
 
 			case 'google':
@@ -318,7 +334,9 @@ function scriptSocialSdk ($log, config) {
 					break;
 				case 'linkedin':
 					src = '//platform.linkedin.com/in.js';
-					text = '\n\tapi_key: ' + config.providers.linkedin.clientId + '\n';
+					text = '\n';
+					text += '\t' + 'api_key: ' + config.providers.linkedin.clientId + '\n';
+					text += '\t' + 'scope: ' + config.providers.linkedin.scope.join(' ') + '\n';
 					break;
 				case 'google':
 					src = '//apis.google.com/js/platform.js';
