@@ -2,7 +2,7 @@ const Routes = {
 	default: require('./routes/default.js'),
 	auth: {
 		login: require('./routes/auth.login'),
-		register: require('./routes/auth.register')
+		signup: require('./routes/auth.signup.js')
 	},
 	user: {
 		me: require('./routes/user.me'),
@@ -18,7 +18,7 @@ module.exports = [
 	// basic authentication
 	{ path: '/auth/login', method: 'GET', config: Routes.auth.login.get },
 	{ path: '/auth/login', method: 'POST', config: Routes.auth.login.post },
-	{ path: '/auth/register', method: 'POST', config: Routes.auth.register.post },
+	{ path: '/auth/signup', method: 'POST', config: Routes.auth.signup.post },
 	// social authentication
 	{ path: '/auth/google', method: 'POST', config: Routes.default.any },
 	{ path: '/auth/twitter', method: 'POST', config: Routes.default.any },

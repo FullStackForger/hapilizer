@@ -23,13 +23,13 @@ before(Suite.db.connect);
 after(Suite.db.dropDatabase);
 after(Suite.db.disconnect);
 
-describe('POST /auth/register', () => {
+describe('POST /auth/signup', () => {
 
 	beforeEach(Suite.db.resetDatabase);
 
 	it('should reply successfully (200) with token', (done) => {
 		Suite.server.inject({
-			url: '/auth/register',
+			url: '/auth/signup',
 			method: 'POST',
 			payload: {
 				email: 'indie.forger@email.com',
@@ -45,7 +45,7 @@ describe('POST /auth/register', () => {
 
 	it('should reply with bad request (400) if payload is missing', (done) => {
 		Suite.server.inject({
-			url: '/auth/register',
+			url: '/auth/signup',
 			method: 'POST'
 		}, (res) => {
 			expect(res.statusCode).to.equal(400);
@@ -55,7 +55,7 @@ describe('POST /auth/register', () => {
 
 	it('should reply with bad request (400) if payload is partially missing', (done) => {
 		const sendRequest = function ( payload, next ) {
-			Suite.server.inject({ url: '/auth/register', method: 'POST', payload: payload }, (res) => {
+			Suite.server.inject({ url: '/auth/signup', method: 'POST', payload: payload }, (res) => {
 				expect(res.statusCode).to.equal(400);
 				next();
 			});
@@ -74,7 +74,7 @@ describe('POST /auth/register', () => {
 
 	it('should reply with conflict error (409) when email exist', (done) => {
 		Suite.server.inject({
-			url: '/auth/register',
+			url: '/auth/signup',
 			method: 'POST',
 			payload: {
 				email: 'test.user@gmail.com',
@@ -93,7 +93,7 @@ describe('POST /auth/register', () => {
 		});
 
 		Suite.server.inject({
-			url: '/auth/register',
+			url: '/auth/signup',
 			method: 'POST',
 			payload: {
 				email: 'test.user@gmail.com',
