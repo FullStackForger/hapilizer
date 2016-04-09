@@ -38,7 +38,7 @@ describe('POST /auth/register', () => {
 			}
 		}, (res) => {
 			expect(res.statusCode).to.equal(200);
-
+			expect(res.result.access_token).to.be.string();
 			done();
 		});
 	});
