@@ -7,7 +7,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
 angular.module('hapilizer', []);
 
-angular.module('hapilizer').constant('hapilizerConfig', {
+angular.module('hapilizer').constant('hapilizer.config', {
 	httpInterceptor: function() { return true; },
 	withCredentials: false,
 	tokenRoot: null,
@@ -18,11 +18,26 @@ angular.module('hapilizer').constant('hapilizerConfig', {
 	tokenName: 'hapilizer_token',
 	authHeader: 'Authorization',
 	authToken: 'Bearer',
-	storageType: 'localStorage'
+	storageType: 'localStorage',
+	facebookReady: false,
+	providers: {
+		facebook: {                 // https://developers.facebook.com/docs/javascript/reference/FB.init/v2.5
+			appId: undefined,
+			version: 'v2.5' // or v2.0, v2.1, v2.2, v2.3, v2.4
+		},
+		linkedInReady: false,
+		linkedIn: {
+			clientId: undefined
+		},
+		googleReady: false,
+		google: {
+			clientId: undefined
+		}
+	}
 });
 
 angular.module('hapilizer').provider('auth', hapilizerAuth);
-hapilizerAuth.$inject = ['hapilizerConfig'];
+hapilizerAuth.$inject = ['hapilizer.config'];
 function hapilizerAuth(config) {
 	Object.defineProperties(this, {
 		httpInterceptor: {
@@ -75,10 +90,17 @@ function hapilizerAuth(config) {
 		}
 	});
 
+	angular.forEach(Object.keys(config.providers), function(provider) {
+		this[provider] = function(params) {
+			return angular.extend(config.providers[provider], params);
+		};
+	}, this);
+
 	this.$get = function(hapilizerInternal, hapilizerShared) {
 		return {
 			isAuthenticated: hapilizerShared.isAuthenticated,
 			login: hapilizerInternal.login,
+			authenticate: hapilizerInternal.authenticate,
 			logout: hapilizerInternal.logout,
 			//link: hapilizerInternal.link,   // todo
 			//unlink: hapilizerInternal.unlink, // todo
@@ -86,11 +108,11 @@ function hapilizerAuth(config) {
 		};
 	};
 
-	this.$get.$inject = ['hapilizerInternal', 'hapilizerShared'];
+	this.$get.$inject = ['hapilizer.internals', 'hapilizer.shared'];
 }
 
-angular.module('hapilizer').service('hapilizerInternal', internal);
-internal.$inject = ['$http', '$q', 'hapilizerUtils', 'hapilizerConfig', 'hapilizerShared', 'hapilizerStore'];
+angular.module('hapilizer').service('hapilizer.internals', internal);
+internal.$inject = ['$http', '$q', 'hapilizerUtils', 'hapilizer.config', 'hapilizer.shared', 'hapilizer.store'];
 function internal($http, $q, utils, config, shared, store) {
 
 	this.login = function(user, opts) {
@@ -104,6 +126,38 @@ function internal($http, $q, utils, config, shared, store) {
 			shared.setToken(response);
 			return response;
 		});
+	};
+
+	this.authenticate = function(provider) {
+		var deferred = $q.defer();
+		if (!Object.keys(config.providers).includes(provider)) {
+			return $q.reject('Provider ' + provider + ' is not supported.');
+		}
+		switch(provider) {
+
+			case 'facebook':
+				if (!FB instanceof Object) return $q.reject('FB SDK is not available');
+				if (!config.facebookReady) FB.init(config.providers.facebook);
+				config.facebookReady = true;
+				FB.login(function(response) {
+					if (response.authResponse) {
+						deferred.resolve(response);
+					} else {
+						deferred.reject('User cancelled login or did not fully authorize.');
+					}
+				});
+				break;
+
+			case 'linkedin':
+
+				break;
+
+			case 'google':
+
+				break;
+		}
+
+		return deferred.promise;
 	};
 
 	this.logout = function() {
@@ -122,8 +176,8 @@ function internal($http, $q, utils, config, shared, store) {
 	};
 }
 
-angular.module('hapilizer').service('hapilizerShared', shared);
-shared.$inject = ['$q', '$window', '$log', 'hapilizerConfig', 'hapilizerStore'];
+angular.module('hapilizer').service('hapilizer.shared', shared);
+shared.$inject = ['$q', '$window', '$log', 'hapilizer.config', 'hapilizer.store'];
 function shared($q, $window, $log, config, store) {
 
 	this.isAuthenticated = function() {
@@ -193,8 +247,8 @@ function hapilizerUtils() {
 	};
 }
 
-angular.module('hapilizer').service('hapilizerStore', store);
-store.$inject = ['$window', '$log', 'hapilizerConfig'];
+angular.module('hapilizer').service('hapilizer.store', store);
+store.$inject = ['$window', '$log', 'hapilizer.config'];
 function store($window, $log, config) {
 
 	this.get = function(key) {
@@ -232,7 +286,7 @@ function store($window, $log, config) {
 }
 
 angular.module('hapilizer').service('hapilizerInterceptor', interceptor);
-interceptor.$inject = ['$q', 'hapilizerConfig', 'hapilizerStore', 'hapilizerShared'];
+interceptor.$inject = ['$q', 'hapilizer.config', 'hapilizer.store', 'hapilizer.shared'];
 function interceptor($q, config, store, shared) {
 	this.request = function(request) {
 			if (request.skipAuthorization) {

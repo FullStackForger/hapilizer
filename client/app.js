@@ -6,13 +6,34 @@ var dependencies = [
 ];
 
 angular.module('MyApp', dependencies)
+	.config(function(authProvider) {
+		authProvider.facebook({
+			appId: '1717363278549346'
+		})
+	})
   .config(function(socialProvider) {
     //socialProvider.setGoogleKey("YOUR GOOGLE CLIENT ID");
     //socialProvider.setLinkedInKey("YOUR LINKEDIN CLIENT ID");
     socialProvider.setFbKey({appId: "1717363278549346", apiVersion: "API VERSION"})
   })
-  .config(function($stateProvider, $urlRouterProvider, $authProvider) {
+	.config(function($authProvider) {
+		$authProvider.facebook({
+			clientId: '1717363278549346'
+		});
 
+		$authProvider.google({
+			clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
+		});
+
+		$authProvider.linkedin({
+			clientId: '77cw786yignpzj'
+		});
+
+		$authProvider.twitter({
+			url: '/auth/twitter'
+		});
+	})
+  .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
@@ -58,23 +79,6 @@ angular.module('MyApp', dependencies)
       });
 
     $urlRouterProvider.otherwise('/');
-
-    $authProvider.facebook({
-      clientId: '657854390977827'
-    });
-
-    $authProvider.google({
-      clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
-    });
-
-    $authProvider.linkedin({
-      clientId: '77cw786yignpzj'
-    });
-
-    $authProvider.twitter({
-      url: '/auth/twitter'
-    });
-
 
     function skipIfLoggedIn($q, $auth) {
       var deferred = $q.defer();
