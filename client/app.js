@@ -9,7 +9,10 @@ angular.module('MyApp', dependencies)
 	.config(function(authProvider) {
 		authProvider.facebook({
 			appId: '1717363278549346'
-		})
+		});
+		authProvider.linkedin({
+			clientId: '77wqasdp85mhao'
+		});
 	})
   .config(function(socialProvider) {
     //socialProvider.setGoogleKey("YOUR GOOGLE CLIENT ID");

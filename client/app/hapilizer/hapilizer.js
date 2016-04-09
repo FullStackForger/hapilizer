@@ -19,19 +19,19 @@ angular.module('hapilizer').constant('hapilizer.config', {
 	authHeader: 'Authorization',
 	authToken: 'Bearer',
 	storageType: 'localStorage',
-	facebookReady: false,
 	providers: {
 		facebook: {                 // https://developers.facebook.com/docs/javascript/reference/FB.init/v2.5
 			appId: undefined,
-			version: 'v2.5' // or v2.0, v2.1, v2.2, v2.3, v2.4
+			version: 'v2.5', // or v2.0, v2.1, v2.2, v2.3, v2.4
+			ready: false
 		},
-		linkedInReady: false,
-		linkedIn: {
-			clientId: undefined
+		linkedin: {
+			clientId: undefined,
+			ready: false
 		},
-		googleReady: false,
 		google: {
-			clientId: undefined
+			clientId: undefined,
+			ready: false
 		}
 	}
 });
@@ -283,6 +283,63 @@ function store($window, $log, config) {
 	if (!storeEnabled) {
 		$log.warn(config.storageType + ' is not available.');
 	}
+}
+
+angular.module('hapilizer').directive('socialSdk', scriptSocialSdk);
+scriptSocialSdk.$inject = ['$log', 'hapilizer.config'];
+function scriptSocialSdk ($log, config) {
+	return {
+		restrict: 'A',
+		controllerAs: 'ctrl',
+		replace: true,
+		scope: {
+			provider: '@'
+		},
+		link: function (scope, element, attrs, ctrl) {
+			if (element[0].nodeName.toLowerCase() !== 'script') {
+				var warnMsg = '';
+				warnMsg += 'Invalid directive usage on: ' + element[0].outerHTML + '.\n';
+				warnMsg += 'Directive social-sdk can only be used as attribute on <script> tag.'
+				return $log.warn(warnMsg);
+			}
+
+			if (!attrs.provider) {
+				var warnMsg = '';
+				warnMsg += 'Invalid directive usage on: ' + element[0].outerHTML + '.\n';
+				warnMsg += 'Attribute provider is required.';
+				return $log.warn(warnMsg);
+			}
+
+			var src = null;
+			var text = '';
+			switch(attrs.provider) {
+				case 'facebook':
+					src = '//connect.facebook.net/en_US/sdk.js';
+					break;
+				case 'linkedin':
+					src = '//platform.linkedin.com/in.js';
+					text = '\n\tapi_key: ' + config.providers.linkedin.clientId + '\n';
+					break;
+				case 'google':
+					src = '//apis.google.com/js/platform.js';
+					break;
+				default:
+					var warnMsg = '';
+					warnMsg += 'Invalid directive usage on: ' + element[0].outerHTML + '.\n';
+					warnMsg += 'Provider ' + attrs.provider + ' not supported';
+					return $log.warn(warnMsg);
+			}
+
+			if (src != null) {
+				var newElement = document.createElement('script');
+				newElement.type = 'text/javascript';
+				newElement.src = src;
+				newElement.async = true;
+				newElement.text = text;
+				element.replaceWith(newElement);
+			}
+		}
+	};
 }
 
 angular.module('hapilizer').service('hapilizerInterceptor', interceptor);
