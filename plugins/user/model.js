@@ -8,7 +8,15 @@ var userSchema = new Mongoose.Schema({
 	bio: String,
 	picture: String,
 	bitbucket: String,
-	facebook: String,
+	facebook: {
+		id: String,
+		email: String,
+		name: String,
+		first_name: String,
+		last_name: String,
+		token: Object,            // token details
+		picture: String           // user generated
+	},
 	foursquare: String,
 	google: String,
 	github: String,

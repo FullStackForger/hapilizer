@@ -2,6 +2,7 @@
 const User = require('../model');
 const Joi = require('joi');
 const Boom = require('boom');
+const Hoek = require('hoek');
 const Axios = require('axios');
 
 const Helpers = require('../core/helpers');
@@ -32,7 +33,6 @@ exports.post = {
 
 		Promise.resolve(codeSwapParams)
 			.then(internal.swapAccessCodeForToken)
-			.then(internal.parseAndStoreAccessToken)
 			.then(internal.retrieveUserProfile)
 			.then(internal.authenticateUser)
 			.then((user) => {
@@ -49,37 +49,37 @@ internal.swapAccessCodeForToken = function (swapParams) {
 	return Axios
 		.get(accessTokenUrl, { params: swapParams })
 		.then((response) => {
-			return response.data;
+			return {
+				token: Hoek.clone(response.data)
+			};
 		});
 };
 
-internal.parseAndStoreAccessToken = function (response) {
-	// todo: store access token in db
-	//response.expires_in;
-	//response.access_token;
-	return response.access_token;
-};
-
-internal.retrieveUserProfile = function (accessToken) {
+internal.retrieveUserProfile = function (data) {
 	return Axios
-		.get(graphApiUrl, { params: { access_token: accessToken } })
+		.get(graphApiUrl, { params: { access_token: data.token.access_token } })
 		.then((response) => {
-			return response.data;
+			data.profile = Hoek.clone(response.data);
+			return data;
 		});
 };
 
-internal.authenticateUser = function (fbProfile) {
+internal.authenticateUser = function (data) {
 	return User
 		.findOne( { $or: [
-			{ facebook: fbProfile.id },
-			{ email: fbProfile.email }
+			{ 'facebook.id': data.profile.id },
+			{ email: data.profile.email }
 		]})
 		.then((user) => {
 			if (!user) user = new User();
-			user.facebook = fbProfile.id;
-			user.email = user.email || fbProfile.email;
-			user.picture = user.picture || pictureUrl.replace('{{profileId}}', fbProfile.id);
-			user.displayName = user.displayName || fbProfile.name;
+
+			user.facebook = data.profile;
+			user.facebook.picture =  pictureUrl.replace('{{profileId}}', data.profile.id);
+			user.facebook.token = data.token;
+
+			user.email = user.email || data.profile.email;
+			user.picture = user.picture || user.facebook.picture;
+			user.displayName = user.displayName || data.profile.name;
 			return user.save();
 		})
 };

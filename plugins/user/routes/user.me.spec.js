@@ -30,8 +30,7 @@ describe('GET /user/me', () => {
 
 		const userMockData = {
 			email: 'test.user@gmail.com',
-			displayName: 'Test User',
-			facebook: 'qwe123qwe123qwe123'
+			displayName: 'Test User'
 		};
 
 		User
@@ -66,6 +65,9 @@ describe('GET /user/me', () => {
 	});
 
 	it('should reply (200) with user complete profile', (done) => {
+		// not the best practice but complete mock user data set is large and changing
+		const userMockData = require('../test/userData.mock')[1];
+
 		User
 			.findOne({ email: 'another.user@gmail.com' })
 			.then(requestProfile)
@@ -84,9 +86,14 @@ describe('GET /user/me', () => {
 				expect(res.statusCode).to.equal(200);
 				expect(res.payload).to.exist();
 				expect(res.result).to.exist();
-				expect(res.result.email).to.be.string();
-				expect(res.result.displayName).to.be.string();
-				expect(res.result.bio).to.be.string();        // <- user is without bio
+				Object.keys(res.result).map((key) => {
+					if (key == '_id') {
+						const mongoIdRegExp = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+						expect(res.result[key].toString()).to.match(mongoIdRegExp);
+					} else {
+						expect(res.result[key]).to.deep.include(userMockData[key]);
+					}
+				});
 				done();
 			});
 		}
