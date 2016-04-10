@@ -42,7 +42,7 @@ describe('plugin', () => {
 		const plugin = { register: Hapilizer, options: { } };
 		server.register(plugin, (err) => {
 			expect(err.isJoi).to.be.true;
-			expect(err.message).to.equal('child "auth" fails because ["auth" is required]');
+			expect(err.message).to.equal('child "token" fails because ["token" is required]');
 			done();
 		});
 	});
@@ -65,13 +65,13 @@ describe('plugin', () => {
 		};
 		server.register(plugin, (err) => {
 			expect(err).to.exist();
-			expect(err.message).to.be.equal('child "database" fails because [child "port" fails because ["port" must be a number]]');
+			expect(err.message).to.be.equal('child "port" fails because ["port" must be a number]');
 			done();
 		});
 	});
 
 	it('should not register with invalid authentication options', (done) => {
-		const plugin = { register: Hapilizer, options: { auth: { invalidValue: 123 } } };
+		const plugin = { register: Hapilizer, options: { invalidValue: 123 } };
 		server.register(plugin, (err) => {
 			expect(err).to.not.be.null;
 			done();

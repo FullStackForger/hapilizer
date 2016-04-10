@@ -12,8 +12,8 @@ exports.validate = function (request, username, password, callback) {
 		user.comparePassword(password, function(err, matches) {
 			if (!matches) return callback(Boom.unauthorized(errMsg), false);
 
-			//const secret = request.server.registrations.user.options.auth.token.secret;
-			const secret = request.route.realm.pluginOptions.auth.token.secret;
+			//const secret = request.server.registrations.user.options.token.secret;
+			const secret = request.route.realm.pluginOptions.token.secret;
 			callback(null, true, {
 				token: Helpers.createJWT(user, secret),
 				email: username

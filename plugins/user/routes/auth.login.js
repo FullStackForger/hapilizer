@@ -31,7 +31,7 @@ exports.post = {
 				if (!verified) {
 					return reply(Boom.unauthorized(unauthorizedMsg));
 				}
-				const secret = reply.realm.pluginOptions.auth.token.secret;
+				const secret = reply.realm.pluginOptions.token.secret;
 				reply({ access_token: Helpers.createJWT(user, secret) });
 			});
 		});

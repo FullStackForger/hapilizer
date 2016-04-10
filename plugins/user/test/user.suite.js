@@ -40,7 +40,7 @@ suite.header.getJWTAuthorization = function (user) {
 		sub: user._id,
 		iat: Moment().unix(),
 		exp: Moment().add(14, 'days').unix()
-	}, optionsMock.auth.token.secret);
+	}, optionsMock.token.secret);
 };
 
 suite.db = {};
