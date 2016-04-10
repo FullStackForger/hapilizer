@@ -40,7 +40,7 @@ exports.post = {
 				reply({ access_token: Helpers.createJWT(user, secret) });
 			})
 			.catch((err) => {
-				reply(Boom.badImplementation('Server failed to authenticate'));
+				reply(Boom.badImplementation('Server failed to authenticate', err));
 			})
 	}
 };
@@ -70,12 +70,15 @@ internal.retrieveUserProfile = function (accessToken) {
 
 internal.authenticateUser = function (fbProfile) {
 	return User
-		.findOne({ facebook: fbProfile.id })
+		.findOne( { $or: [
+			{ facebook: fbProfile.id },
+			{ email: fbProfile.email }
+		]})
 		.then((user) => {
 			if (!user) {
 				user = new User({ facebook: fbProfile.id });
 			}
-
+			user.email = user.email || fbProfile.email;
 			user.picture = user.picture || pictureUrl.replace('{{profileId}}', fbProfile.id);
 			user.displayName = user.displayName || fbProfile.name;
 			return user.save();
