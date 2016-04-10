@@ -3,9 +3,6 @@ const User = require('../model');
 const Joi = require('joi');
 const Boom = require('boom');
 
-const Helpers = require('../core/helpers');
-const internal = {};
-
 exports.post = {
 	validate: {
 		payload: {
