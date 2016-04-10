@@ -3,7 +3,8 @@ const Routes = {
 	auth: {
 		login: require('./routes/auth.login'),
 		signup: require('./routes/auth.signup'),
-		facebook: require('./routes/auth.facebook')
+		facebook: require('./routes/auth.facebook'),
+		unlink: require('./routes/auth.unlink')
 	},
 	user: {
 		me: require('./routes/user.me'),
@@ -16,11 +17,13 @@ module.exports = [
 	{ path: '/user/me', method: 'GET', config: Routes.user.me.get },
 	{ path: '/user/me', method: 'PUT', config: Routes.user.me.put },
 	{ path: '/user/{userId}', method: 'GET', config: Routes.user.profile.get },
-	// basic authentication
+	// standard authentication
 	{ path: '/auth/login', method: 'GET', config: Routes.auth.login.get },
 	{ path: '/auth/login', method: 'POST', config: Routes.auth.login.post },
 	{ path: '/auth/signup', method: 'POST', config: Routes.auth.signup.post },
-	// social authentication
+	// social authentication: unlink
+	{ path: '/auth/unlink', method: 'POST', config: Routes.auth.unlink.post },
+	// social authentication: with providers
 	{ path: '/auth/google', method: 'POST', config: Routes.default.any },
 	{ path: '/auth/twitter', method: 'POST', config: Routes.default.any },
 	{ path: '/auth/facebook', method: 'POST', config: Routes.auth.facebook.post }

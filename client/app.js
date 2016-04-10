@@ -42,8 +42,11 @@ angular
 		$authProvider.tokenPrefix = 'hapilizer';
 		$authProvider.tokenName = 'access_token';
 
+		// fixes trailing slash issue: https://github.com/sahat/satellizer/blob/0.14.0/satellizer.js#L27
+		$authProvider.unlinkUrl = '/auth/unlink';
+
 		$authProvider.facebook({
-			clientId: '1717363278549346'
+			clientId: '1717923608493313'
 		});
 
 		$authProvider.google({
