@@ -75,9 +75,8 @@ internal.authenticateUser = function (fbProfile) {
 			{ email: fbProfile.email }
 		]})
 		.then((user) => {
-			if (!user) {
-				user = new User({ facebook: fbProfile.id });
-			}
+			if (!user) user = new User();
+			user.facebook = fbProfile.id;
 			user.email = user.email || fbProfile.email;
 			user.picture = user.picture || pictureUrl.replace('{{profileId}}', fbProfile.id);
 			user.displayName = user.displayName || fbProfile.name;
