@@ -13,7 +13,10 @@ exports.put = {
 };
 
 function handleGetMe(request, reply) {
-	reply(request.auth.credentials.user);
+	User
+		.findById(request.auth.credentials.user._id)
+		.then((user) => { reply(user.toObject()) })
+		.catch((err) => reply(Boom.badImplementation('Server error', err)));
 }
 
 function handlePutMe(request, reply) {

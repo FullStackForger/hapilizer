@@ -1,7 +1,8 @@
 module.exports = [{
 	email: 'test.user@gmail.com',
 	displayName: 'Test User',
-	password: 'test.user'
+	password: 'test.user',
+	facebook: 'qwe123qwe123qwe123'
 }, {
 	email: 'another.user@gmail.com',
 	displayName: 'Another User',

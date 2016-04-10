@@ -27,8 +27,15 @@ describe('GET /user/me', () => {
 	beforeEach(Suite.db.resetDatabase);
 
 	it('should reply (200) with user partial profile', (done) => {
+
+		const userMockData = {
+			email: 'test.user@gmail.com',
+			displayName: 'Test User',
+			facebook: 'qwe123qwe123qwe123'
+		};
+
 		User
-			.findOne({ email: 'test.user@gmail.com' })
+			.findOne({ email: userMockData.email })
 			.then(requestProfile)
 			.catch((err) => done(err) );
 
@@ -45,9 +52,14 @@ describe('GET /user/me', () => {
 				expect(res.statusCode).to.equal(200);
 				expect(res.payload).to.exist();
 				expect(res.result).to.exist();
-				expect(res.result.email).to.be.string();
-				expect(res.result.displayName).to.be.string();
-				expect(res.result.bio).to.be.undefined();       // <- user is without bio
+				Object.keys(res.result).map((key) => {
+					if (key == '_id') {
+						const mongoIdRegExp = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+						expect(res.result[key].toString()).to.match(mongoIdRegExp);
+					} else {
+						expect(res.result[key]).to.equal(userMockData[key]);
+					}
+				});
 				done();
 			});
 		}
