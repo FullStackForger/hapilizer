@@ -18,6 +18,12 @@ var userSchema = new Mongoose.Schema({
 	yahoo: String,
 	twitter: String,
 	twitch: String
+}, {
+	toObject: {
+		transform: function (doc, ret) {
+			delete ret.__v;
+		}
+	}
 });
 
 userSchema.pre('save', function(next) {
