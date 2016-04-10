@@ -15,6 +15,12 @@ module.exports = {
 		token: {
 			secret: process.env.TOKEN_SECRET || 'YOUR_UNIQUE_JWT_TOKEN_SECRET',
 			algorithms: [ 'HS256' ] // only allow HS256 algorithm
+		},
+		providers: {
+			facebook: {
+				clientId: process.env.FACEBOOK_CLIENT_ID  || 'YOUR_FACEBOOK_CLIENT_ID',
+				secret:   process.env.FACEBOOK_SECRET     || 'YOUR_FACEBOOK_SECRET'
+			}
 		}
 	}
 };
