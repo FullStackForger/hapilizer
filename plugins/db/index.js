@@ -1,7 +1,15 @@
 'use strict';
 const Hoek = require('hoek');
 const Mongoose = require('mongoose');
+const Joi = require('joi');
 
+const schema = Joi.object({
+	host: Joi.string(),
+	port: Joi.number(),
+	db: Joi.string(),
+	username: Joi.string().empty(''),
+	password: Joi.string().empty('')
+});
 const defaults = {
 	host: '127.0.0.1',
 	port: 27017,
@@ -11,6 +19,9 @@ const defaults = {
 };
 
 exports.register = function (server, options, next) {
+	const validation = Joi.validate(options, schema);
+	if (validation.error) return next(validation.error);
+
 	const connection = Mongoose.connection;
 	const settings = Hoek.applyToDefaults(defaults, options);
 

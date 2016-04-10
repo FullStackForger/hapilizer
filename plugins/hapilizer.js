@@ -1,23 +1,6 @@
 'use strict';
 const Joi = require('joi');
-
 const internals = {};
-
-internals.schema = Joi.object({
-	database: Joi.object({
-		host: Joi.string(),
-		port: Joi.number(),
-		db: Joi.string(),
-		username: Joi.string().empty(''),
-		password: Joi.string().empty('')
-	}),
-	auth: Joi.object({
-		token: Joi.object({
-			secret: Joi.string().required(),
-			algorithms: Joi.array().items(Joi.string()).default(['HS256'])
-		})
-	}).required()
-});
 
 exports.register = function (server, options, next) {
 	const validation = Joi.validate(options, internals.schema);
@@ -36,10 +19,10 @@ exports.register = function (server, options, next) {
 		}
 	},{
 		register: require('./db/index'),
-		options: { database: options.database }
+		options: options.database
 	},{
 		register: require('./user/index'),
-		options: { auth: options.auth }
+		options: options.auth
 	}];
 	
 	server.register(plugins, (err) => next(err));
@@ -48,3 +31,8 @@ exports.register = function (server, options, next) {
 exports.register.attributes = {
 	pkg: require('./../package.json')
 };
+
+internals.schema = Joi.object({
+	database: Joi.object(),
+	auth: Joi.object()
+});
