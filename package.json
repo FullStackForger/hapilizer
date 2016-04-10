@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/indieforger/hapilizer#readme",
   "dependencies": {
+    "axios": "^0.9.1",
     "bcrypt": "^0.8.5",
     "boom": "^3.1.2",
     "forger": "^1.4.0",

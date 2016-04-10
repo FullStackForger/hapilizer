@@ -2,7 +2,8 @@ const Routes = {
 	default: require('./routes/default.js'),
 	auth: {
 		login: require('./routes/auth.login'),
-		signup: require('./routes/auth.signup.js')
+		signup: require('./routes/auth.signup'),
+		facebook: require('./routes/auth.facebook')
 	},
 	user: {
 		me: require('./routes/user.me'),
@@ -22,7 +23,7 @@ module.exports = [
 	// social authentication
 	{ path: '/auth/google', method: 'POST', config: Routes.default.any },
 	{ path: '/auth/twitter', method: 'POST', config: Routes.default.any },
-	{ path: '/auth/facebook', method: 'POST', config: Routes.default.any }
+	{ path: '/auth/facebook', method: 'POST', config: Routes.auth.facebook.post }
 	//{ path: '/auth/github', method: 'POST', config: defaultCtrl.any },
 	//{ path: '/auth/instagram', method: 'POST', config: defaultCtrl.any },
 	//{ path: '/auth/linkedin', method: 'POST', config: defaultCtrl.any },
