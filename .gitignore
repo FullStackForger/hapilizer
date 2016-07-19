@@ -28,7 +28,7 @@ build/Release
 
 # Dependencies
 node_modules
-client/vendor
+example/client/vendor
 
 # Optional npm cache directory
 .npm

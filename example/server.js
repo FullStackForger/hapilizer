@@ -1,7 +1,7 @@
 const Hapi = require('hapi');
 
-const config = require('./config');
-const hapilizer = require('./lib/hapilizer');
+const config = require('./../config');
+const hapilizer = require('./../lib/hapilizer');
 
 const server = new Hapi.Server();
 const connection = {

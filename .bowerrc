@@ -1,5 +1,5 @@
 {
-  "directory": "client/vendor",
+  "directory": "example/client/vendor",
   "analytics": true,
   "color": true
 }
