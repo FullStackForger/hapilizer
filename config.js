@@ -7,7 +7,7 @@
 var fs = require('fs');
 var configJSONPath = 'config.json';
 var Hoek = require('hoek');
-var defaults = {
+var config = {
 	server: {
 		host: process.env.PORT || 'localhost',
 		port: process.env.HOST || 8080
@@ -34,12 +34,11 @@ var defaults = {
 	}
 };
 
-var config = {};
 try {
 	let options = JSON.parse(fs.readFileSync(configJSONPath, 'utf8'));
-	config = Hoek.applyToDefaults(defaults, options);
+	config = Hoek.applyToDefaults(config, options);
 } catch (e) {
-	config = Hoek.applyToDefaults(defaults, {});
+	config = Hoek.applyToDefaults(config, {});
 }
 
 module.exports = config;
