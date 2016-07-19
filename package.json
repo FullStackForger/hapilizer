@@ -4,9 +4,9 @@
   "description": "**[Satellizer](https://github.com/sahat/satellizer)** is a simple to use, end-to-end, token-based authentication module\r for [AngularJS](http://angularjs.org) with built-in support for Google, Facebook,\r LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email\r and Password sign-in. However, you are not limited to the sign-in options above, in fact\r you can add any *OAuth 1.0* or *OAuth 2.0* provider by passing provider-specific information\r in the app *config* block.",
   "main": "hapilizer.js",
   "scripts": {
-    "test": "lab  ./plugins -P spec -m 5000 -t 100 -v",
-    "test-lint": "lab ./plugins -P spec -m 5000 -t 100 -La code",
-    "test-cov-html": "lab ./plugins -P spec -m 5000 -r html -o coverage.html -La code"
+    "test": "lab  ./lib -P spec -m 5000 -t 100 -v",
+    "test-lint": "lab ./lib -P spec -m 5000 -t 100 -La code",
+    "test-cov-html": "lab ./lib -P spec -m 5000 -r html -o coverage.html -La code"
   },
   "repository": {
     "type": "git",
