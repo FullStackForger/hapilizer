@@ -1,5 +1,4 @@
 const Hapi = require('hapi');
-const Hoek = require('hoek');
 
 const config = require('./config');
 const hapilizer = require('./plugins/hapilizer');
