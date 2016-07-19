@@ -8,12 +8,12 @@ module.exports = Joi.object({
 	}).required(),
 	providers: Joi.object({
 		facebook: Joi.object({
-			clientId: Joi.string().required(),
-			secret: Joi.string().required()
+			clientId: Joi.string().allow(''),
+			secret: Joi.string().allow('')
 		}),
 		google: Joi.object({
-			clientId: Joi.string().required(),
-			secret: Joi.string().required()
+			clientId: Joi.string().allow(''),
+			secret: Joi.string().allow('')
 		})
 	})
 });
