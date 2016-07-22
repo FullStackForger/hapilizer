@@ -9,16 +9,16 @@ const connection = {
 	port: config.server.port
 	};
 
-const plugin = {
+const plugins = [{
 	register: hapilizer,
 	options: {
 		auth: config.auth,
 		database: config.database
 	}
-};
+}];
 
 server.connection(connection);
-server.register(plugin, (err) => {
+server.register(plugins, (err) => {
 	if (err) throw err;
 
 	// Log incoming request
