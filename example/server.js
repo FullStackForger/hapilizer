@@ -10,6 +10,17 @@ const connection = {
 	};
 
 const plugins = [{
+	register: require('hapi-app-spa'),
+	options: {
+		auth: false,
+		index: 'index.html',
+		assets: [
+			'css', 'app', 'vendor', 'partials',   // <- assets
+			'auth', 'user'                        // <- endpoints
+		],
+		relativeTo: './client'
+	}
+},{
 	register: hapilizer,
 	options: {
 		auth: config.auth,
