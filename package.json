@@ -19,18 +19,18 @@
   },
   "homepage": "https://github.com/indieforger/hapilizer#readme",
   "dependencies": {
-    "axios": "^0.9.1",
-    "bcrypt": "^0.8.5",
+    "axios": "^0.13.1",
+    "bcrypt": "^0.8.7",
     "boom": "^3.1.2",
     "forger": "^1.4.0",
-    "hapi": "^13.2.1",
+    "hapi": "^14.1.0",
     "hapi-app-spa": "^0.4.1",
     "hapi-auth-basic": "^4.1.0",
     "hapi-auth-jwt2": "^5.4.1",
-    "hoek": "^3.0.4",
-    "joi": "^8.0.5",
+    "hoek": "^4.0.2",
+    "joi": "^9.0.4",
     "moment": "^2.12.0",
-    "mongoose": "^4.4.11"
+    "mongoose": "^4.5.8"
   },
   "devDependencies": {
     "code": "^2.1.1",
