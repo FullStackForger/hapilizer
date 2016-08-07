@@ -1,19 +1,26 @@
 # Hapi API for [Satellizer](https://github.com/sahat/satellizer)
 
-> WORK IN PROGRESS
+Hapilizer is Hapi plugin providing API endpoints for Satellizer, token-based
+authentication module for Angular.
 
-## Motivation 
+## Motivation
 
-**[Satellizer][1]** is a simple to use, end-to-end, token-based authentication module 
-for [AngularJS][2] with built-in support for Google, Facebook, LinkedIn, Twitter, Instagram, GitHub, 
-Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email
-and Password sign-in. However, you are not limited to the sign-in options above, in fact
-you can add any *OAuth 1.0* or *OAuth 2.0* provider by passing provider-specific information
+Satellizer is amazing Anuglar authentication module with over 120 contributors
+and over 2000 commits. I has server implementations for different languages.
+Node server example has been written for ExpressJS. I needed variation of it
+for Hapi and Hapilizer is exactly that.
+
+## Satellizer
+
+> **[Satellizer][1]** is a simple to use, end-to-end, token-based authentication
+module for [AngularJS][2] with built-in support for Google, Facebook,
+LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft
+(Windows Live) OAuth providers, as well as Email and Password sign-in. However,
+you are not limited to the sign-in options above, in fact you can add any
+*OAuth 1.0* or *OAuth 2.0* provider by passing provider-specific information
 in the app *config* block.
 
-
-
-## API Endpoints 
+## API Endpoints
 
 (implemented)
 
@@ -36,9 +43,7 @@ Endpoint        | Method    | Auth. | Description
 
 ## Client
 
-Currently client is a copy of satellizer example made for angular 1.0.
-It is not yet integrated with hapilizer API. (hopefully will be in couple of days)
-
+Example client is a copy of satellizer example made for angular 1.0.
 
 ## Resources
 
@@ -49,25 +54,31 @@ It is not yet integrated with hapilizer API. (hopefully will be in couple of day
     - [Expiration and Extension of Access Tokens](https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension)
     - [Access Tokens](https://developers.facebook.com/docs/facebook-login/access-tokens)
   - [Sign in with LinkedIn]()
-  
-### Interesting Angular Plugins
+
+### Other interesting Angular authentication plugins
  - [angularjs-social-login][4] - social login with Google, FB, LinkedIN.
  - [angular-social-login][5] - social login with Google & Facebook for PhoneGap/Cordova.
  - [satellizer][1] - end-to-end, token-based authentication module for AngularJS with built-in support for Google, Facebook, LinkedIn, Twitter, Instagram, GitHub, Bitbucket, Yahoo, Twitch, Microsoft (Windows Live) OAuth providers, as well as Email and Password sign-in.
- 
-### Awesome Node Packages
+
+### Great Node libraries
  - [hapi][3] - configuration-centric framework with built-in support for input validation, caching,
    authentication, and other essential facilities for building web and services applications.
- - moment
- - jsonwebtoken
- - bcrypt
- - mongoose
- - hapi-app-spa
- - forger
- 
+ - [moment][6] - Parse, validate, manipulate, and display dates
+ - [jsonwebtoken][7] - JSON Web Token implementation (symmetric and asymmetric)
+ - [bcrypt][8] - Lib to help you hash passwords.
+ - [mongoose][9] - Mongoose MongoDB ODM
+ - [hapi-app-spa][10] - hapi plugin for single page application
+ - [forger][11] - Async utilities and helpers for node
+
 
 [1]: https://github.com/sahat/satellizer
 [2]: http://angularjs.org
 [3]: https://github.com/hapijs/hapi
 [4]: https://github.com/indieforger/angularjs-social-login
 [5]: https://github.com/Paldom/angular-social-login
+[6]: https://www.npmjs.com/package/moment
+[7]: https://www.npmjs.com/package/jsonwebtoken
+[8]: https://www.npmjs.com/package/bcrypt
+[9]: https://www.npmjs.com/package/mongoose
+[10]: https://www.npmjs.com/package/hapi-app-spa
+[11]: https://www.npmjs.com/package/forger
