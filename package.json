@@ -2,7 +2,7 @@
   "name": "hapilizer",
   "version": "0.1.1",
   "description": "Hapilizer is Hapi plugin providing API endpoints for Satellizer, token-based authentication module for Angular.",
-  "main": "hapilizer.js",
+  "main": "lib/hapilizer.js",
   "scripts": {
     "test": "lab  ./lib -P spec -m 5000 -t 100 -v",
     "test-lint": "lab ./lib -P spec -m 5000 -t 100 -La code",
@@ -23,7 +23,7 @@
     "bcrypt": "^0.8.7",
     "boom": "^3.1.2",
     "forger": "^1.4.0",
-    "hapi": "^14.1.0",
+
     "hapi-app-spa": "^0.4.1",
     "hapi-auth-basic": "^4.1.0",
     "hapi-auth-jwt2": "^5.4.1",
@@ -38,5 +38,8 @@
     "jsdoc": "^3.4.0",
     "lab": "^10.3.0",
     "sinon": "^1.17.3"
-  }
+  },
+	"peerDependencies": {
+		"hapi": "^14.1.0"
+	}
 }
