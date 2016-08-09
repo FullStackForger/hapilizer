@@ -1,13 +1,16 @@
 const Hapi = require('hapi');
 
 const config = require('./../config');
-const hapilizer = require('./../lib/hapilizer');
+const hapilizer = require('./../');
 
 const server = new Hapi.Server();
 const connection = {
 	host: config.server.host,
-	port: config.server.port
-	};
+	port: config.server.port,
+	routes: {
+		cors: true
+	}
+};
 
 const plugins = [{
 	register: require('hapi-app-spa'),
