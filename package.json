@@ -1,6 +1,6 @@
 {
   "name": "hapilizer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Hapilizer is Hapi plugin providing API endpoints for Satellizer, token-based authentication module for Angular.",
   "main": "lib/hapilizer.js",
   "scripts": {
